@@ -1,2 +1,2 @@
 # deliveryfood
-restfull server
+RESTful server
