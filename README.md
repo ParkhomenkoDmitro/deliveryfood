@@ -1,4 +1,4 @@
-# deliveryfood 
+# Delivery food backend
 RESTful server based on spring-boot and hibernate frameworks.
 
 ## Build & run
