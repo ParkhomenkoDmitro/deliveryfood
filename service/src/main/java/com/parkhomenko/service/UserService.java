@@ -7,4 +7,6 @@ import com.parkhomenko.common.domain.User;
  */
 public interface UserService {
     User findOne(Long aLong);
+    void deleteAll();
+    User save(User user);
 }

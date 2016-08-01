@@ -25,4 +25,16 @@ public class UserServiceImpl implements UserService {
     public User findOne(Long aLong) {
         return userRepository.findOne(aLong);
     }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
+
+    @Override
+    @Transactional
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by dmytro on 19.07.16.
@@ -23,9 +21,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/users/{id}")
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public HttpEntity<User> getUser(@PathVariable Long id) {
         User user = userService.findOne(id);
         return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    public Long save(@RequestBody User user) {
+        return userService.save(user).getId();
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.DELETE)
+    public void deleteAll() {
+        userService.deleteAll();
     }
 }
