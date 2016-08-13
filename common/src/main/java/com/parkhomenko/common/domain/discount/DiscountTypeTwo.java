@@ -68,13 +68,13 @@ public class DiscountTypeTwo extends AbstractDiscount {
 
         appropriates.sort((p1, p2) -> p1.getProduct().getPrice().compareTo(p2.getProduct().getPrice()));
 
-        for(int allProductsQuantity = 0, freeProductQuantity = 0, i = 0; i < appropriates.size(); i++) {
+        for(int allProductsQuantity = 0, freeProductsQuantity = 0, i = 0; i < appropriates.size(); i++) {
             OrderProductItem item = appropriates.get(i);
             int productQuantity = item.getCount();
 
             allProductsQuantity += productQuantity;
-            freeProductQuantity =  allProductsQuantity / EVERY_FREE_PRODUCT_INDEX - freeProductQuantity;
-            freeProductQuantity += freeProductQuantity;
+            int freeProductQuantity = allProductsQuantity / EVERY_FREE_PRODUCT_INDEX - freeProductsQuantity;
+            freeProductsQuantity += freeProductQuantity;
 
             if(freeProductQuantity > 0) {
                 int payProductQuantity = productQuantity - freeProductQuantity;
