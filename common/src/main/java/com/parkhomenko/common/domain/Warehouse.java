@@ -1,6 +1,7 @@
 package com.parkhomenko.common.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Set;
 public class Warehouse implements Serializable {
     private Long id;
     private Address address;
-    private Set<Admin> admins;
+    private Set admins = new HashSet();
 
     public Warehouse() {
     }

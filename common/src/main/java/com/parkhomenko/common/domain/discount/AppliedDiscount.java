@@ -1,0 +1,98 @@
+package com.parkhomenko.common.domain.discount;
+
+import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.OrderProductItem;
+import com.parkhomenko.common.domain.special_types.DiscountType;
+
+import java.io.Serializable;
+
+/**
+ * Created by dmytro on 12.08.16.
+ */
+public class AppliedDiscount implements Serializable {
+    private Long id;
+    private DiscountType type;
+    private String discountCode;
+    private Integer count;
+    private MonetaryAmount priceForOne;
+    private MonetaryAmount totalPrice;
+    private OrderProductItem orderProductItem;
+
+    public AppliedDiscount() {
+    }
+
+    public MonetaryAmount getPriceForOne() {
+        return priceForOne;
+    }
+
+    public void setPriceForOne(MonetaryAmount priceForOne) {
+        this.priceForOne = priceForOne;
+    }
+
+    public MonetaryAmount getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(MonetaryAmount totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public OrderProductItem getOrderProductItem() {
+        return orderProductItem;
+    }
+
+    public void setOrderProductItem(OrderProductItem orderProductItem) {
+        this.orderProductItem = orderProductItem;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public DiscountType getType() {
+        return type;
+    }
+
+    public void setType(DiscountType type) {
+        this.type = type;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AppliedDiscount that = (AppliedDiscount) o;
+
+        if (!getDiscountCode().equals(that.getDiscountCode())) return false;
+        return getOrderProductItem().equals(that.getOrderProductItem());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getDiscountCode().hashCode();
+        result = 31 * result + getOrderProductItem().hashCode();
+        return result;
+    }
+}

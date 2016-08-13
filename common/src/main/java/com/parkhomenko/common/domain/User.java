@@ -2,13 +2,15 @@ package com.parkhomenko.common.domain;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Created by dmytro on 19.07.16.
  */
 public class User implements Serializable {
     private Long id;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String email;
     private String phone;
     private String login;
@@ -28,11 +30,13 @@ public class User implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return firstname + ' ' + lastname;
     }
 
     public void setName(String name) {
-        this.name = name;
+        StringTokenizer t = new StringTokenizer(name);
+        firstname = t.nextToken();
+        lastname = t.nextToken();
     }
 
     public String getEmail() {
