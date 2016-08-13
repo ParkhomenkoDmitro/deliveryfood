@@ -13,19 +13,19 @@ import java.util.Set;
 public class CalculateResultPriceType extends AbstractDiscount {
     @Override
     protected void calculate(Client client, Order order) {
-        Set<OrderProductItem> products = order.getOrderProductItems();
+        Set<OrderProduct> products = order.getOrderProducts();
 
-        for (OrderProductItem orderProductItem : products) {
-            Product product = orderProductItem.getProduct();
-            List<AppliedDiscount> appliedDiscounts = orderProductItem.getAppliedDiscounts();
+        for (OrderProduct orderProduct : products) {
+            Product product = orderProduct.getProduct();
+            List<AppliedDiscount> appliedDiscounts = orderProduct.getAppliedDiscounts();
             if (appliedDiscounts == null) {
-                MonetaryAmount price = product.calcPrice(orderProductItem.getCount());
-                orderProductItem.setPrice(price);
-                orderProductItem.setCount(orderProductItem.getCount());
+                MonetaryAmount price = product.calcPrice(orderProduct.getCount());
+                orderProduct.setPrice(price);
+                orderProduct.setCount(orderProduct.getCount());
             } else {
                 MonetaryAmount monetaryAmount = MonetaryAmountFactory.create();
                 appliedDiscounts.forEach(appliedDiscount -> monetaryAmount.add(appliedDiscount.getTotalPrice()));
-                orderProductItem.setPrice(monetaryAmount);
+                orderProduct.setPrice(monetaryAmount);
             }
         }
     }

@@ -11,8 +11,21 @@ public class Warehouse implements Serializable {
     private Long id;
     private Address address;
     private Set admins = new HashSet();
+    private Set<WarehouseProduct> products = new HashSet<>();
 
     public Warehouse() {
+    }
+
+    public void setAdmins(Set admins) {
+        this.admins = admins;
+    }
+
+    public Set<WarehouseProduct> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<WarehouseProduct> products) {
+        this.products = products;
     }
 
     public Long getId() {
@@ -31,12 +44,8 @@ public class Warehouse implements Serializable {
         this.address = address;
     }
 
-    public Set<Admin> getAdmins() {
+    public Set getAdmins() {
         return admins;
-    }
-
-    public void setAdmins(Set<Admin> admins) {
-        this.admins = admins;
     }
 
     @Override

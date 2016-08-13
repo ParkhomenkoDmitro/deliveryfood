@@ -27,22 +27,22 @@ public class DiscountTypeOne extends AbstractDiscount {
 
     @Override
     protected void calculate(Client client, Order order) {
-        Set<OrderProductItem> products = order.getOrderProductItems();
-        for (OrderProductItem orderProductItem : products) {
-            Product product = orderProductItem.getProduct();
+        Set<OrderProduct> products = order.getOrderProducts();
+        for (OrderProduct orderProduct : products) {
+            Product product = orderProduct.getProduct();
             DiscountTypeOne discount = fetcher.fetchDiscountTypeOne(product);
-            List<AppliedDiscount> appliedDiscounts = orderProductItem.getAppliedDiscounts();
+            List<AppliedDiscount> appliedDiscounts = orderProduct.getAppliedDiscounts();
             if (discount != null && appliedDiscounts == null) {
                 //продукт підтримує скидку даного типу та до нього не застосовано ще жодної скидки
                 AppliedDiscount appliedDiscount = new AppliedDiscount();
 
-                appliedDiscount.setCount(orderProductItem.getCount());
+                appliedDiscount.setCount(orderProduct.getCount());
                 appliedDiscount.setDiscountCode(discount.getCode());
                 appliedDiscount.setType(DiscountType.TYPE_ONE);
                 appliedDiscount.setPriceForOne(discount.getPrice());
-                appliedDiscount.setTotalPrice(product.calcPrice(discount.getPrice(), orderProductItem.getCount()));
+                appliedDiscount.setTotalPrice(product.calcPrice(discount.getPrice(), orderProduct.getCount()));
 
-                appliedDiscount.setOrderProductItem(orderProductItem);
+                appliedDiscount.setOrderProduct(orderProduct);
                 appliedDiscounts.add(appliedDiscount);
             }
         }

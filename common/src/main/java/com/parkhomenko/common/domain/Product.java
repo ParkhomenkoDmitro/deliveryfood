@@ -29,6 +29,7 @@ public class Product implements Serializable {
     private String image;
     private ProductParameter core;
     private ProductParameter shipping;
+    private Set<WarehouseProduct> warehouses = new HashSet<>();
 
     public Product() {
     }
@@ -45,6 +46,14 @@ public class Product implements Serializable {
         //TODO: common calc logic for all posible products according to
         result = price;
         return result;
+    }
+
+    public Set<WarehouseProduct> getWarehouses() {
+        return warehouses;
+    }
+
+    public void setWarehouses(Set<WarehouseProduct> warehouses) {
+        this.warehouses = warehouses;
     }
 
     public ProductParameter getShipping() {

@@ -2,7 +2,7 @@ package com.parkhomenko.common.domain.discount;
 
 import com.parkhomenko.common.domain.Client;
 import com.parkhomenko.common.domain.Order;
-import com.parkhomenko.common.domain.OrderProductItem;
+import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.special_types.DiscountType;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
@@ -36,12 +36,12 @@ public class DiscountTypeTwo extends AbstractDiscount {
 
     @Override
     protected void calculate(Client client, Order order) {
-        Set<OrderProductItem> products = order.getOrderProductItems();
+        Set<OrderProduct> products = order.getOrderProducts();
         Set<String> discountCodes = new HashSet<>();
-        for (OrderProductItem orderProductItem : products) {
-            Product product = orderProductItem.getProduct();
+        for (OrderProduct orderProduct : products) {
+            Product product = orderProduct.getProduct();
             DiscountTypeTwo discount = fetcher.fetchDiscountTypeTwo(product);
-            List<AppliedDiscount> appliedDiscounts = orderProductItem.getAppliedDiscounts();
+            List<AppliedDiscount> appliedDiscounts = orderProduct.getAppliedDiscounts();
             if(discount != null && appliedDiscounts == null) {
                 discountCodes.add(discount.getCode());
             }
@@ -49,27 +49,27 @@ public class DiscountTypeTwo extends AbstractDiscount {
         discountCodes.forEach(code -> doLogic(findAppropriate(code, products)));
     }
 
-    private List<OrderProductItem> findAppropriate(String code, Set<OrderProductItem> products) {
-        List<OrderProductItem> appropriates = new ArrayList<>();
-        for (OrderProductItem orderProductItem : products) {
-            Product product = orderProductItem.getProduct();
+    private List<OrderProduct> findAppropriate(String code, Set<OrderProduct> products) {
+        List<OrderProduct> appropriates = new ArrayList<>();
+        for (OrderProduct orderProduct : products) {
+            Product product = orderProduct.getProduct();
             DiscountTypeTwo discount = fetcher.fetchDiscountTypeTwo(product);
-            List<AppliedDiscount> appliedDiscounts = orderProductItem.getAppliedDiscounts();
+            List<AppliedDiscount> appliedDiscounts = orderProduct.getAppliedDiscounts();
             if (discount != null && appliedDiscounts == null && discount.getCode().equals(code)) {
                 //продукт підтримує скидку даного типу та до нього не застосовано ще жодної скидки
-                appropriates.add(orderProductItem);
+                appropriates.add(orderProduct);
             }
         }
         return appropriates;
     }
 
-    private void doLogic(List<OrderProductItem> appropriates) {
+    private void doLogic(List<OrderProduct> appropriates) {
         final int EVERY_FREE_PRODUCT_INDEX = 3;
 
         appropriates.sort((p1, p2) -> p1.getProduct().getPrice().compareTo(p2.getProduct().getPrice()));
 
         for(int allProductsQuantity = 0, freeProductsQuantity = 0, i = 0; i < appropriates.size(); i++) {
-            OrderProductItem item = appropriates.get(i);
+            OrderProduct item = appropriates.get(i);
             int productQuantity = item.getCount();
 
             allProductsQuantity += productQuantity;
@@ -87,7 +87,7 @@ public class DiscountTypeTwo extends AbstractDiscount {
     }
 
     private void apply(DiscountTypeTwo discount,
-                       OrderProductItem orderProduct,
+                       OrderProduct orderProduct,
                        int count,
                        MonetaryAmount priceForOne,
                        MonetaryAmount totalPrice) {
@@ -97,7 +97,7 @@ public class DiscountTypeTwo extends AbstractDiscount {
         appliedDiscount.setType(DiscountType.TYPE_TWO);
         appliedDiscount.setPriceForOne(priceForOne);
         appliedDiscount.setTotalPrice(totalPrice);
-        appliedDiscount.setOrderProductItem(orderProduct);
+        appliedDiscount.setOrderProduct(orderProduct);
         orderProduct.getAppliedDiscounts().add(appliedDiscount);
     }
 }

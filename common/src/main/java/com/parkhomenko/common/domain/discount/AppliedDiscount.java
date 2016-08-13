@@ -1,7 +1,7 @@
 package com.parkhomenko.common.domain.discount;
 
 import com.parkhomenko.common.domain.util.MonetaryAmount;
-import com.parkhomenko.common.domain.OrderProductItem;
+import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.special_types.DiscountType;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ public class AppliedDiscount implements Serializable {
     private Integer count;
     private MonetaryAmount priceForOne;
     private MonetaryAmount totalPrice;
-    private OrderProductItem orderProductItem;
+    private OrderProduct orderProduct;
 
     public AppliedDiscount() {
     }
@@ -37,12 +37,12 @@ public class AppliedDiscount implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public OrderProductItem getOrderProductItem() {
-        return orderProductItem;
+    public OrderProduct getOrderProduct() {
+        return orderProduct;
     }
 
-    public void setOrderProductItem(OrderProductItem orderProductItem) {
-        this.orderProductItem = orderProductItem;
+    public void setOrderProduct(OrderProduct orderProduct) {
+        this.orderProduct = orderProduct;
     }
 
     public Integer getCount() {
@@ -85,14 +85,14 @@ public class AppliedDiscount implements Serializable {
         AppliedDiscount that = (AppliedDiscount) o;
 
         if (!getDiscountCode().equals(that.getDiscountCode())) return false;
-        return getOrderProductItem().equals(that.getOrderProductItem());
+        return getOrderProduct().equals(that.getOrderProduct());
 
     }
 
     @Override
     public int hashCode() {
         int result = getDiscountCode().hashCode();
-        result = 31 * result + getOrderProductItem().hashCode();
+        result = 31 * result + getOrderProduct().hashCode();
         return result;
     }
 }

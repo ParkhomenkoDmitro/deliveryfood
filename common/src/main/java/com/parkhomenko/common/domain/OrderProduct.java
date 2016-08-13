@@ -1,12 +1,39 @@
 package com.parkhomenko.common.domain;
 
+import com.parkhomenko.common.domain.discount.AppliedDiscount;
+import com.parkhomenko.common.domain.util.MonetaryAmount;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by dmytro on 10.08.16.
+ * Created by dmytro on 11.08.16.
  */
-public class OrderProduct extends Product {
+public class OrderProduct implements Serializable {
+    private Order order;
     private Product product;
+    private Integer count;
+    private MonetaryAmount price;
+    private List<AppliedDiscount> appliedDiscounts = new ArrayList<>();
 
     public OrderProduct() {
+    }
+
+    public List<AppliedDiscount> getAppliedDiscounts() {
+        return appliedDiscounts;
+    }
+
+    public void setAppliedDiscounts(List<AppliedDiscount> appliedDiscounts) {
+        this.appliedDiscounts = appliedDiscounts;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Product getProduct() {
@@ -17,47 +44,38 @@ public class OrderProduct extends Product {
         this.product = product;
     }
 
+    public MonetaryAmount getPrice() {
+        return price;
+    }
+
+    public void setPrice(MonetaryAmount price) {
+        this.price = price;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         OrderProduct that = (OrderProduct) o;
 
-        if (getBarcode() != null ? !getBarcode().equals(that.getBarcode()) : that.getBarcode() != null) return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getPrice() != null ? !getPrice().equals(that.getPrice()) : that.getPrice() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
-            return false;
-        if (getBrand() != null ? !getBrand().equals(that.getBrand()) : that.getBrand() != null) return false;
-        if (getManufacturer() != null ? !getManufacturer().equals(that.getManufacturer()) : that.getManufacturer() != null)
-            return false;
-        if (getInstructions() != null ? !getInstructions().equals(that.getInstructions()) : that.getInstructions() != null)
-            return false;
-        if (getCountry() != null ? !getCountry().equals(that.getCountry()) : that.getCountry() != null) return false;
-        if (getAllergicInfo() != null ? !getAllergicInfo().equals(that.getAllergicInfo()) : that.getAllergicInfo() != null)
-            return false;
-        if (getAliasNames() != null ? !getAliasNames().equals(that.getAliasNames()) : that.getAliasNames() != null)
-            return false;
-        return getCore() != null ? getCore().equals(that.getCore()) : that.getCore() == null;
+        if (order != null ? !order.equals(that.order) : that.order != null) return false;
+        return product != null ? product.equals(that.product) : that.product == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getBarcode() != null ? getBarcode().hashCode() : 0);
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getBrand() != null ? getBrand().hashCode() : 0);
-        result = 31 * result + (getManufacturer() != null ? getManufacturer().hashCode() : 0);
-        result = 31 * result + (getInstructions() != null ? getInstructions().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getAllergicInfo() != null ? getAllergicInfo().hashCode() : 0);
-        result = 31 * result + (getAliasNames() != null ? getAliasNames().hashCode() : 0);
-        result = 31 * result + (getCore() != null ? getCore().hashCode() : 0);
+        int result = order != null ? order.hashCode() : 0;
+        result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
 }
