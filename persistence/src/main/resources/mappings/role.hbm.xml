@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.Role" table="ROLE">
+        <meta attribute="class-description">
+            This class contains the role detail.
+        </meta>
+        <id name="id" column="ROLE_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">role_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="name" column="NAME" type="string"/>
+    </class>
+</hibernate-mapping>

@@ -2,6 +2,7 @@ package com.parkhomenko.common.domain;
 
 import com.parkhomenko.common.domain.discount.AppliedDiscount;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,15 @@ public class OrderProduct implements Serializable {
     private List<AppliedDiscount> appliedDiscounts = new ArrayList<>();
 
     public OrderProduct() {
+    }
+
+    public void calculateTotalPrice() {
+        if (appliedDiscounts == null) {
+            price = product.calcPrice(count);
+        } else {
+            price = MonetaryAmountFactory.create();
+            appliedDiscounts.forEach(appliedDiscount -> price.add(appliedDiscount.getTotalPrice()));
+        }
     }
 
     public List<AppliedDiscount> getAppliedDiscounts() {

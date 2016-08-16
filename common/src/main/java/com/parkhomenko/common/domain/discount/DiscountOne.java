@@ -10,11 +10,11 @@ import java.util.Set;
 /**
  * Created by dmytro on 12.08.16.
  */
-public class DiscountTypeOne extends AbstractDiscount {
+public class DiscountOne extends AbstractDiscount {
     private MonetaryAmount price;
     private Product product;
 
-    public DiscountTypeOne() {
+    public DiscountOne() {
     }
 
     public Product getProduct() {
@@ -30,7 +30,7 @@ public class DiscountTypeOne extends AbstractDiscount {
         Set<OrderProduct> products = order.getOrderProducts();
         for (OrderProduct orderProduct : products) {
             Product product = orderProduct.getProduct();
-            DiscountTypeOne discount = fetcher.fetchDiscountTypeOne(product);
+            DiscountOne discount = fetcher.fetchDiscountTypeOne(product);
             List<AppliedDiscount> appliedDiscounts = orderProduct.getAppliedDiscounts();
             if (discount != null && appliedDiscounts == null) {
                 //продукт підтримує скидку даного типу та до нього не застосовано ще жодної скидки

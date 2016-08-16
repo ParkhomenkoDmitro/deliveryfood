@@ -10,6 +10,6 @@ import com.parkhomenko.common.domain.Product;
  * Interface for impl by service
  */
 public interface DiscountFetcher {
-    DiscountTypeOne fetchDiscountTypeOne(Product product);
-    DiscountTypeTwo fetchDiscountTypeTwo(Product product);
+    DiscountOne fetchDiscountTypeOne(Product product);
+    DiscountTwo fetchDiscountTypeTwo(Product product);
 }

@@ -2,8 +2,8 @@ package com.parkhomenko.service.impl;
 
 import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.discount.DiscountFetcher;
-import com.parkhomenko.common.domain.discount.DiscountTypeOne;
-import com.parkhomenko.common.domain.discount.DiscountTypeTwo;
+import com.parkhomenko.common.domain.discount.DiscountOne;
+import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.service.DiscountService;
 
 /**
@@ -11,12 +11,12 @@ import com.parkhomenko.service.DiscountService;
  */
 public class DiscountServiceImpl implements DiscountFetcher, DiscountService {
     @Override
-    public DiscountTypeOne fetchDiscountTypeOne(Product product) {
+    public DiscountOne fetchDiscountTypeOne(Product product) {
         return null;
     }
 
     @Override
-    public DiscountTypeTwo fetchDiscountTypeTwo(Product product) {
+    public DiscountTwo fetchDiscountTypeTwo(Product product) {
         return null;
     }
 }
