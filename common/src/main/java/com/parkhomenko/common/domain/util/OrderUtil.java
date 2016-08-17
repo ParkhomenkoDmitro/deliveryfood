@@ -8,8 +8,10 @@ import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
 
 /**
- * Created by dmytro on 12.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 12.08.16.
  */
+
 public class OrderUtil {
     public static void calcOrderPriceWithDiscounts(Order order, DiscountFetcher fetcher) {
         AbstractDiscount discountOne = new DiscountOne();

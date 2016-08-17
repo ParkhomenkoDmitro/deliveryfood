@@ -3,8 +3,10 @@ package com.parkhomenko.common.domain;
 import java.io.Serializable;
 
 /**
- * Created by dmytro on 22.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 22.07.16.
  */
+
 public class Geolocation implements Serializable {
     private Double lat;
     private Double lng;

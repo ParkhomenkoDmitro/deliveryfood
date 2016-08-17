@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dmytro on 11.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 11.08.16.
  */
+
 public class OrderProduct implements Serializable {
     private Order order;
     private Product product;

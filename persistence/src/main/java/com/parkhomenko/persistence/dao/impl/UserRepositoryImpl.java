@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dmytro on 19.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 19.07.16.
  */
+
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 

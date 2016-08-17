@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created by dmytro on 22.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 22.07.16.
  */
+
 public class City implements Serializable {
     private Long id;
     private String name;

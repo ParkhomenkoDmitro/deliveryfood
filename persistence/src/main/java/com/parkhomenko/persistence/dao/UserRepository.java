@@ -5,7 +5,8 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
- * Created by dmytro on 19.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 19.07.16.
  */
 
 @NoRepositoryBean

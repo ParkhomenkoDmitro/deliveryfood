@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by dmytro on 19.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 19.07.16.
  */
+
 @Service
 public class UserServiceImpl implements UserService {
 

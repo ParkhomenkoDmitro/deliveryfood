@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by dmytro on 13.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 13.08.16.
  */
+
 public class OrderHistory implements Serializable {
     private Long id;
     private String note;

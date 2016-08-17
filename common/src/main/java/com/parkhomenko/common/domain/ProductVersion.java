@@ -1,8 +1,10 @@
 package com.parkhomenko.common.domain;
 
 /**
- * Created by dmytro on 10.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 10.08.16.
  */
+
 public class ProductVersion extends Product {
     private Product product;
 

@@ -7,8 +7,10 @@ import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.service.DiscountService;
 
 /**
- * Created by dmytro on 13.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 13.08.16.
  */
+
 public class DiscountServiceImpl implements DiscountFetcher, DiscountService {
     @Override
     public DiscountOne fetchDiscountTypeOne(Product product) {

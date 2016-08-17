@@ -9,8 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by dmytro on 11.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 11.08.16.
  */
+
 public class Order implements Serializable {
     private Long id;
     private String code;

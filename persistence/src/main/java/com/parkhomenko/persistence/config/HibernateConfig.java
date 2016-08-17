@@ -18,8 +18,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * Created by dmytro on 18.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 18.07.16.
  */
+
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfig implements TransactionManagementConfigurer {

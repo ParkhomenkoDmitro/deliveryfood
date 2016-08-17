@@ -3,8 +3,10 @@ package com.parkhomenko.common.domain;
 import java.io.Serializable;
 
 /**
- * Created by dmytro on 13.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 13.08.16.
  */
+
 public class WarehouseProduct implements Serializable {
     private Warehouse warehouse;
     private Product product;

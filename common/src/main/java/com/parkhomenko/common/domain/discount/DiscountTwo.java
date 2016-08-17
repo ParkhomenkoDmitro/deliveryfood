@@ -14,13 +14,12 @@ import java.util.stream.Collectors;
 import static java.util.Comparator.*;
 
 /**
- * Created by dmytro on 12.08.16.
- */
-
-/**
  * Class that represent DiscountTwo discount type logic and will be applied to all products in order that:
  * supported discount of this type and it is the first discount that will be applied to this product.
+ * DiscountTwo discount type logic: every third minimal price product is a free.
  *
+ * @author Dmytro Parkhomenko
+ * Created on 12.08.16.
  */
 
 public class DiscountTwo extends AbstractDiscount {

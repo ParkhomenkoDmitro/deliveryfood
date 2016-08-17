@@ -3,8 +3,10 @@ package com.parkhomenko.common.domain;
 import com.parkhomenko.common.domain.special_types.Measure;
 
 /**
- * Created by dmytro on 09.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 09.08.16.
  */
+
 public class ProductParameter {
     private Double value;
     private Measure measure;

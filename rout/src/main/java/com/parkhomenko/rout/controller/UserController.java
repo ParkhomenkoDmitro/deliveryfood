@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by dmytro on 19.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 19.07.16.
  */
+
 @RestController
 public class UserController {
 

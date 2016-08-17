@@ -8,8 +8,10 @@ import com.parkhomenko.common.domain.User;
 import java.io.IOException;
 
 /**
- * Created by dmytro on 01.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 01.08.16.
  */
+
 public class UserSerializer extends StdSerializer<User> {
 
     public UserSerializer(Class<User> t) {

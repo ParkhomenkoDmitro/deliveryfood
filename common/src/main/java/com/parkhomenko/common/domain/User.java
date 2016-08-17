@@ -5,8 +5,10 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
- * Created by dmytro on 19.07.16.
+ * @author Dmytro Parkhomenko
+ * Created on 19.07.16.
  */
+
 public class User implements Serializable {
     private Long id;
     private String firstname;

@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by dmytro on 09.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 09.08.16.
  */
+
 public class Category implements Serializable {
     private Long id;
     private String name;

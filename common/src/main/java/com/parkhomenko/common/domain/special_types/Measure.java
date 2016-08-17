@@ -1,8 +1,10 @@
 package com.parkhomenko.common.domain.special_types;
 
 /**
- * Created by dmytro on 10.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 10.08.16.
  */
+
 public enum Measure {
     G(0),
     KG(1),

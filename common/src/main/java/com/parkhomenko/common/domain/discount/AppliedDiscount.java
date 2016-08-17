@@ -7,8 +7,10 @@ import com.parkhomenko.common.domain.special_types.DiscountType;
 import java.io.Serializable;
 
 /**
- * Created by dmytro on 12.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 12.08.16.
  */
+
 public class AppliedDiscount implements Serializable {
     private Long id;
     private DiscountType type;

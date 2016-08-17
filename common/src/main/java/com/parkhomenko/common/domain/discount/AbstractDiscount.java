@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by dmytro on 11.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 11.08.16.
  */
+
 public abstract class AbstractDiscount implements Serializable {
     private Long id;
     private String code;

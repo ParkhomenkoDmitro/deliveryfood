@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
- * Created by dmytro on 01.08.16.
+ * @author Dmytro Parkhomenko
+ * Created on 01.08.16.
  */
+
 @Configuration
 public class JsonConfig {
     @Bean
@@ -19,6 +21,9 @@ public class JsonConfig {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(User.class, new UserSerializer(User.class));
+
+        //TODO: add here other serializers
+
         mapper.registerModule(module);
         return mapper;
     }
