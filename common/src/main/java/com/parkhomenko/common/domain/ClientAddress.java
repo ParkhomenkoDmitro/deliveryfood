@@ -15,8 +15,17 @@ public class ClientAddress implements Serializable {
     private String house;
     private Integer entrance;
     private Integer flat;
+    private Client client;
 
     public ClientAddress() {
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Long getId() {

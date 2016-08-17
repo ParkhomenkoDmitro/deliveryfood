@@ -12,13 +12,13 @@ import java.util.Set;
 public class Warehouse implements Serializable {
     private Long id;
     private Address address;
-    private Set admins = new HashSet();
+    private Set<Admin> admins = new HashSet<>();
     private Set<WarehouseProduct> products = new HashSet<>();
 
     public Warehouse() {
     }
 
-    public void setAdmins(Set admins) {
+    public void setAdmins(Set<Admin> admins) {
         this.admins = admins;
     }
 
@@ -46,7 +46,7 @@ public class Warehouse implements Serializable {
         this.address = address;
     }
 
-    public Set getAdmins() {
+    public Set<Admin> getAdmins() {
         return admins;
     }
 

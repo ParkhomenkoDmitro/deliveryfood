@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.ClientAddress" table="CLIENT_ADDRESS">
+        <meta attribute="class-description">
+            This class contains the client address detail.
+        </meta>
+        <id name="id" column="CLIENT_ADDRESS_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">client_address_id_seq</param>
+            </generator>
+        </id>
+
+        <many-to-one name="city" column="CITY_ID" class="com.parkhomenko.common.domain.City" not-null="true"/>
+
+        <component name="geolocation" class="com.parkhomenko.common.domain.Geolocation">
+            <property name="lat" column="LAT" type="double"/>
+            <property name="lng" column="LNG" type="double"/>
+        </component>
+
+        <property name="street" column="STREET" type="string" not-null="true"/>
+        <property name="house" column="HOUSE" type="string" not-null="true"/>
+        <property name="entrance" column="ENTRANCE" type="integer"/>
+        <property name="flat" column="FLAT" type="integer"/>
+
+        <many-to-one name="client" column="CLIENT_ID" class="com.parkhomenko.common.domain.Client" not-null="true"/>
+    </class>
+</hibernate-mapping>

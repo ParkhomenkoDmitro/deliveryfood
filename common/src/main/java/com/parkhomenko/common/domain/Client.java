@@ -9,7 +9,6 @@ import java.util.Set;
  */
 
 public class Client extends User implements Serializable {
-    //TODO: ManyToMany will be here
     private Set<ClientAddress> addresses;
 
     public Client() {

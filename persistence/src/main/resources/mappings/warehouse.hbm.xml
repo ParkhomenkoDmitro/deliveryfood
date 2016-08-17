@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.Warehouse" table="WAREHOUSE">
+        <meta attribute="class-description">
+            This class contains the warehouse detail.
+        </meta>
+        <id name="id" column="WAREHOUSE_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">warehouse_id_seq</param>
+            </generator>
+        </id>
+
+        <component name="address" class="com.parkhomenko.common.domain.Address">
+            <many-to-one name="city" column="CITY_ID" class="com.parkhomenko.common.domain.City" not-null="true"/>
+
+            <component name="geolocation" class="com.parkhomenko.common.domain.Geolocation">
+                <property name="lat" column="LAT" type="double"/>
+                <property name="lng" column="LNG" type="double"/>
+            </component>
+
+            <property name="street" column="STREET" type="string" not-null="true"/>
+            <property name="house" column="HOUSE" type="string" not-null="true"/>
+            <property name="entrance" column="ENTRANCE" type="integer"/>
+            <property name="flat" column="FLAT" type="integer"/>
+        </component>
+
+        <set name="admins" table="warehouse_admin" inverse="true" lazy="true">
+            <key column="WAREHOUSE_ID" not-null="true"/>
+            <many-to-many class="com.parkhomenko.common.domain.Admin">
+                <column name="USER_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

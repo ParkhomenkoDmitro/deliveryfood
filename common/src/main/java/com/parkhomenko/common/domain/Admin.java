@@ -10,7 +10,7 @@ import java.util.Set;
  */
 
 public class Admin extends User implements Serializable {
-    private Set warehouses = new HashSet();
+    private Set<Warehouse> warehouses = new HashSet<>();
 
     public Admin() {
     }

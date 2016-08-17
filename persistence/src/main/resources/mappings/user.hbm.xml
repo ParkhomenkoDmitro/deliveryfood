@@ -23,7 +23,21 @@
         <property name="password" column="PASSWORD" type="string"/>
         <property name="blocked" column="BLOCKED" type="boolean"/>
 
-        <subclass name="com.parkhomenko.common.domain.Admin" discriminator-value="ADM"/>
+        <set name="roles" table="user_role" lazy="true">
+            <key column="USER_ID" not-null="true"/>
+            <many-to-many class="com.parkhomenko.common.domain.Role">
+                <column name="ROLE_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+
+        <subclass name="com.parkhomenko.common.domain.Admin" discriminator-value="ADM">
+            <set name="warehouses" table="warehouse_admin" lazy="true">
+                <key column="USER_ID" not-null="true"/>
+                <many-to-many class="com.parkhomenko.common.domain.Warehouse">
+                    <column name="WAREHOUSE_ID" not-null="true"/>
+                </many-to-many>
+            </set>
+        </subclass>
 
         <subclass name="com.parkhomenko.common.domain.Driver" discriminator-value="DRI">
             <join table="DRIVERS">
@@ -40,6 +54,11 @@
             </join>
         </subclass>
 
-        <subclass name="com.parkhomenko.common.domain.Client" discriminator-value="CLI"/>
+        <subclass name="com.parkhomenko.common.domain.Client" discriminator-value="CLI">
+            <set name="addresses" inverse="true">
+                <key column="CLIENT_ID" />
+                <one-to-many class="com.parkhomenko.common.domain.ClientAddress"/>
+            </set>
+        </subclass>
     </class>
 </hibernate-mapping>
