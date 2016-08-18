@@ -23,7 +23,7 @@
         <property name="password" column="PASSWORD" type="string"/>
         <property name="blocked" column="BLOCKED" type="boolean"/>
 
-        <set name="roles" table="user_role" lazy="true">
+        <set name="roles" table="USER_ROLE" lazy="true">
             <key column="USER_ID" not-null="true"/>
             <many-to-many class="com.parkhomenko.common.domain.Role">
                 <column name="ROLE_ID" not-null="true"/>
@@ -61,4 +61,16 @@
             </set>
         </subclass>
     </class>
+
+    <query name="deleteAllUsers">
+        DELETE FROM com.parkhomenko.common.domain.User
+    </query>
+
+    <query name="deleteAllAdmins">
+        DELETE FROM com.parkhomenko.common.domain.Admin
+    </query>
+
+    <sql-query name="deleteAllWarehouseAdminNativeSQL">
+        DELETE FROM warehouse_admin
+    </sql-query>
 </hibernate-mapping>

@@ -16,4 +16,8 @@
 
         <property name="name" column="NAME" type="string"/>
     </class>
+
+    <sql-query name="deleteAllUserRoleNativeSQL">
+        DELETE FROM USER_ROLE
+    </sql-query>
 </hibernate-mapping>
