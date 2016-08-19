@@ -2,8 +2,9 @@ package com.parkhomenko.rout.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.parkhomenko.common.domain.Admin;
 import com.parkhomenko.common.domain.User;
-import com.parkhomenko.rout.serializer.UserSerializer;
+import com.parkhomenko.rout.serializer.AdminSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,7 +21,7 @@ public class JsonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addSerializer(User.class, new UserSerializer(User.class));
+        module.addSerializer(Admin.class, new AdminSerializer(Admin.class));
 
         //TODO: add here other serializers
 

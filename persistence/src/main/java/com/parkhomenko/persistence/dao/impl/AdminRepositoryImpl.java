@@ -1,6 +1,5 @@
 package com.parkhomenko.persistence.dao.impl;
 
-import com.parkhomenko.common.domain.Admin;
 import com.parkhomenko.common.domain.User;
 import com.parkhomenko.persistence.dao.AdminRepository;
 import com.parkhomenko.persistence.dao.util.CommonUserRepository;
