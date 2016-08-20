@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public List<Admin> findAll(Sort sort) {
         List<Admin> result = new ArrayList<>();
         repository.findAll(sort).forEach(result::add);
@@ -34,16 +36,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public List<Admin> findAll(Pageable pageable) {
         return repository.findAll(pageable).getContent();
     }
 
     @Override
+    @Transactional
     public Admin save(Admin entity) {
         return repository.save(entity);
     }
 
     @Override
+    @Transactional
     public List<Admin> save(Iterable entities) {
         List<Admin> result = new ArrayList<>();
         Iterable<Admin> admins = repository.save(entities);
@@ -52,6 +57,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public Admin findOne(Long id) {
         return repository.findOne(id);
     }
@@ -62,6 +68,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public List<Admin> findAll() {
         List<Admin> result = new ArrayList<>();
         Iterable<Admin> admins = repository.findAll();
@@ -70,6 +77,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public List<Admin> findAll(Iterable<Long> longs) {
         List<Admin> result = new ArrayList<>();
         Iterable<Admin> admins = repository.findAll(longs);
@@ -78,26 +86,31 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public long count() {
         return repository.count();
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
     @Override
+    @Transactional
     public void delete(Admin entity) {
         repository.delete(entity);
     }
 
     @Override
+    @Transactional
     public void delete(Iterable<Admin> entities) {
         repository.delete(entities);
     }
 
     @Override
+    @Transactional
     public void deleteAll() {
         repository.deleteAll();
     }

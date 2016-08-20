@@ -46,4 +46,9 @@ public class AdminController {
     public List<Admin> findAll(Pageable pageable) {
         return service.findAll(pageable);
     }
+
+    @RequestMapping(value = "/admins/all", method = RequestMethod.GET)
+    public List<Admin> findAll() {
+        return service.findAll();
+    }
 }

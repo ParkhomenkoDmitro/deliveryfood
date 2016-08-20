@@ -5,12 +5,14 @@ import com.parkhomenko.common.domain.discount.DiscountFetcher;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.service.DiscountService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Dmytro Parkhomenko
  * Created on 13.08.16.
  */
 
+@Service
 public class DiscountServiceImpl implements DiscountFetcher, DiscountService {
     @Override
     public DiscountOne fetchDiscountTypeOne(Product product) {

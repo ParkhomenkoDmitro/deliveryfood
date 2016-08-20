@@ -18,7 +18,7 @@ public class User implements Serializable {
     private String login;
     private String password;
     private Set<Role> roles;
-    private boolean blocked;
+    private Boolean blocked;
 
     public User() {
     }
@@ -81,11 +81,11 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public boolean isBlocked() {
+    public Boolean isBlocked() {
         return blocked;
     }
 
-    public void setBlocked(boolean blocked) {
+    public void setBlocked(Boolean blocked) {
         this.blocked = blocked;
     }
 
@@ -103,5 +103,20 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return login != null ? login.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", blocked=" + blocked +
+                '}';
     }
 }

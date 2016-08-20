@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-hikaricp</artifactId>
-            <version>4.3.11.Final</version>
+            <version>5.2.2.Final</version>
         </dependency>
         <!-- HyperSQL DB -->
         <dependency>
