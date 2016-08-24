@@ -54,22 +54,17 @@
             </join>
         </subclass>
 
-        <subclass name="com.parkhomenko.common.domain.Client" discriminator-value="CLI">
-            <set name="addresses" inverse="true">
+        <subclass name="com.parkhomenko.common.domain.Client" discriminator-value="CLI" lazy="true">
+            <set name="addresses" inverse="true" lazy="true">
                 <key column="CLIENT_ID" />
                 <one-to-many class="com.parkhomenko.common.domain.ClientAddress"/>
             </set>
         </subclass>
     </class>
 
-    <query name="deleteAllUsers">
-        DELETE FROM com.parkhomenko.common.domain.User
-    </query>
-
     <query name="deleteAllAdmins">
         DELETE FROM com.parkhomenko.common.domain.Admin
     </query>
-
     <sql-query name="deleteAllWarehouseAdminNativeSQL">
         DELETE FROM warehouse_admin
     </sql-query>

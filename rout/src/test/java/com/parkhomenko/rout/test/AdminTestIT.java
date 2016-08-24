@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:beforeTestRun.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:afterTestRun.sql")
 })
-public class AdminTest {
+public class AdminTestIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -38,6 +38,13 @@ public class AdminTest {
     public void get_all_admins() {
         ResponseEntity<Admin[]> responseEntity = restTemplate.getForEntity("/admins/all", Admin[].class);
         List<Admin> admins = Arrays.asList(responseEntity.getBody());
+
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         System.out.println("|******************get_all_admins: print data: *************************************|");
         admins.forEach(System.out::println);
         System.out.println("|***********************************************************************************|");

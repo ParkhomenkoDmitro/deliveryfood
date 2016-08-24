@@ -81,7 +81,7 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public Boolean isBlocked() {
+    public Boolean getBlocked() {
         return blocked;
     }
 
