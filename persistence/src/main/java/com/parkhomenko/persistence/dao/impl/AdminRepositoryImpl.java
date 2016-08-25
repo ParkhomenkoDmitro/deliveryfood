@@ -54,7 +54,7 @@ public class AdminRepositoryImpl extends CommonUserRepository implements AdminRe
 
     @Override
     public Admin findOne(Long aLong) {
-        return (Admin) getCurrentSession().get(Admin.class, aLong);
+        return getCurrentSession().get(Admin.class, aLong);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class AdminRepositoryImpl extends CommonUserRepository implements AdminRe
     @Override
     public Iterable<Admin> findAll(Iterable<Long> longs) {
         List<Admin> result = new ArrayList<>();
-        longs.forEach(id -> result.add((Admin) getCurrentSession().get(Admin.class, id)));
+        longs.forEach(id -> result.add(getCurrentSession().get(Admin.class, id)));
         return result;
     }
 

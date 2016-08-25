@@ -19,10 +19,14 @@ public class AdminSerializer extends StdSerializer<Admin> {
     }
 
     @Override
-    public void serialize(Admin user, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(Admin admin, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeNumberField("id", user.getId());
-        jsonGenerator.writeStringField("name", user.getName());
+
+        if(admin.getId() != null) {
+            jsonGenerator.writeNumberField("id", admin.getId());
+        }
+
+        jsonGenerator.writeStringField("name", admin.getName());
         jsonGenerator.writeEndObject();
     }
 }

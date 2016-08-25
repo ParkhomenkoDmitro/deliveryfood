@@ -1,12 +1,11 @@
 package com.parkhomenko.rout.controller;
 
 import com.parkhomenko.common.domain.Admin;
+import com.parkhomenko.rout.util.ExceptionUtil;
 import com.parkhomenko.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +26,10 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admins/{id}", method = RequestMethod.GET)
-    public HttpEntity<Admin> getUser(@PathVariable Long id) {
-        Admin user = service.findOne(id);
-        return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(user, HttpStatus.OK);
+    public Admin getById(@PathVariable Long id) {
+        Admin admin = service.findOne(id);
+        ExceptionUtil.check(admin, id);
+        return admin;
     }
 
     @RequestMapping(value = "/admins", method = RequestMethod.POST)
@@ -43,7 +43,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admins", method = RequestMethod.GET)
-    public List<Admin> findAll(Pageable pageable) {
+    public List<Admin> findAll(Pageable pageable) throws MissingServletRequestParameterException {
+        ExceptionUtil.check(pageable);
         return service.findAll(pageable);
     }
 

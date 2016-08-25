@@ -1,1 +1,1 @@
-DROP TABLE public.users CASCADE;
+TRUNCATE TABLE public.users CASCADE;
