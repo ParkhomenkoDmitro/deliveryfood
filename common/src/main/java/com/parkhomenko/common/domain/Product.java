@@ -19,7 +19,7 @@ public class Product implements Serializable {
     private String name;
     private Long availableCount;
     private MonetaryAmount price;
-    private Set categories = new HashSet();
+    private Set<Category> categories = new HashSet<>();
     private Date created;
     private String description;
     private String brand;
@@ -106,11 +106,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Set getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 

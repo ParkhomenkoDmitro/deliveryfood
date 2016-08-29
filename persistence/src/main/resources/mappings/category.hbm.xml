@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.Category" table="CATEGORY" lazy="true">
+        <meta attribute="class-description">
+            This class contains the category detail.
+        </meta>
+        <id name="id" column="CATEGORY_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">category_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="name" column="NAME" type="string" />
+        <property name="image" column="IMAGE" type="string" />
+        <property name="description" column="DESC" type="text" />
+
+        <many-to-one name="parentCategory" column="PARENT_ID" class="com.parkhomenko.common.domain.Category" />
+
+        <set name="childCategories" inverse="true" lazy="true">
+            <key column="PARENT_ID"/>
+            <one-to-many class="com.parkhomenko.common.domain.Category"/>
+        </set>
+
+        <set name="products" table="CATEGORY_PRODUCT" lazy="true">
+            <key column="CATEGORY_ID" not-null="true"/>
+            <many-to-many class="com.parkhomenko.common.domain.Product">
+                <column name="PRODUCT_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+
+        <property name="productsCount" column="PRODUCTS_COUNT" type="long"/>
+    </class>
+</hibernate-mapping>

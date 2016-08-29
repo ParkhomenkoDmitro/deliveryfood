@@ -15,18 +15,18 @@ public class Category implements Serializable {
     private String description;
     private String image;
     private Category parentCategory;
-    private Set childCategories = new HashSet();
-    private Set products = new HashSet();
+    private Set<Category> childCategories = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
     private Long productsCount;
 
     public Category() {
     }
 
-    public Set getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
@@ -70,11 +70,11 @@ public class Category implements Serializable {
         this.parentCategory = parentCategory;
     }
 
-    public Set getChildCategories() {
+    public Set<Category> getChildCategories() {
         return childCategories;
     }
 
-    public void setChildCategories(Set childCategories) {
+    public void setChildCategories(Set<Category> childCategories) {
         this.childCategories = childCategories;
     }
 
