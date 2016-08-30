@@ -1,7 +1,11 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.special_types.OrderStatus;
+import com.parkhomenko.common.domain.discount.AbstractDiscount;
+import com.parkhomenko.common.domain.discount.DiscountFetcher;
+import com.parkhomenko.common.domain.discount.DiscountOne;
+import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +18,10 @@ import java.util.Set;
  */
 
 public class Order implements Serializable {
+    public enum Status {
+        WAITING, ASSEMBLING, RFP, DELIVERING, DELIVERED, CANCELED, TROUBLE;
+    }
+
     private Long id;
     private String code;
     private Date created;
@@ -21,9 +29,9 @@ public class Order implements Serializable {
     private Set<OrderProduct> orderProducts = new HashSet<>();
     private Warehouse warehouse;
     private Client client;
-    private Address destination;
+    private Address clientAddress;
     private String notes;
-    private OrderStatus status;
+    private Status status;
     private boolean isUrgent;
     private MonetaryAmount trafficCoast;
     private MonetaryAmount productsCoast;
@@ -32,6 +40,12 @@ public class Order implements Serializable {
     private Set<OrderHistory> history = new HashSet<>();
 
     public Order() {
+    }
+
+    public void calculateCoast(DiscountFetcher fetcher) {
+        productsCoast = calculateOrderProductsCoast(fetcher);
+        trafficCoast = Traffic.calculateTrafficCoast(clientAddress, warehouse.getAddress());
+        totalCoast = productsCoast.add(trafficCoast);
     }
 
     public Date getCreated() {
@@ -66,12 +80,12 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Address getDestination() {
-        return destination;
+    public Address getClientAddress() {
+        return clientAddress;
     }
 
-    public void setDestination(Address destination) {
-        this.destination = destination;
+    public void setClientAddress(Address clientAddress) {
+        this.clientAddress = clientAddress;
     }
 
     public String getNotes() {
@@ -82,11 +96,11 @@ public class Order implements Serializable {
         this.notes = notes;
     }
 
-    public OrderStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -176,5 +190,22 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         return code != null ? code.hashCode() : 0;
+    }
+
+    private void calculateProductsPriceWithDiscounts(DiscountFetcher fetcher) {
+        AbstractDiscount discountOne = new DiscountOne();
+        AbstractDiscount discountTwo = new DiscountTwo();
+        discountOne.setNextDiscount(discountTwo);
+        discountOne.setFetcher(fetcher);
+        discountTwo.setFetcher(fetcher);
+        discountOne.calculateDiscount(null, this);
+        getOrderProducts().forEach(OrderProduct::calculatePrice);
+    }
+
+    private MonetaryAmount calculateOrderProductsCoast(DiscountFetcher fetcher) {
+        calculateProductsPriceWithDiscounts(fetcher);
+        MonetaryAmount result = MonetaryAmountFactory.ZERO;
+        orderProducts.forEach(orderProduct -> result.add(orderProduct.getPrice()));
+        return result;
     }
 }

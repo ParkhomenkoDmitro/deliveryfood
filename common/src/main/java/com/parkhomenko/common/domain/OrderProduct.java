@@ -23,7 +23,7 @@ public class OrderProduct implements Serializable {
     public OrderProduct() {
     }
 
-    public void calculateTotalPrice() {
+    public void calculatePrice() {
         if (appliedDiscounts == null) {
             price = product.calcPrice(count);
         } else {

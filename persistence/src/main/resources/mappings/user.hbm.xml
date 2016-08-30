@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.parkhomenko.common.domain.User" table="USERS" discriminator-value="USE">
+    <class name="com.parkhomenko.common.domain.User" table="USERS" discriminator-value="USE" lazy="true">
         <meta attribute="class-description">
             This class contains the user detail.
         </meta>
@@ -30,7 +30,7 @@
             </many-to-many>
         </set>
 
-        <subclass name="com.parkhomenko.common.domain.Admin" discriminator-value="ADM">
+        <subclass name="com.parkhomenko.common.domain.Admin" discriminator-value="ADM" lazy="true">
             <set name="warehouses" table="warehouse_admin" lazy="true">
                 <key column="USER_ID" not-null="true"/>
                 <many-to-many class="com.parkhomenko.common.domain.Warehouse">
@@ -39,7 +39,7 @@
             </set>
         </subclass>
 
-        <subclass name="com.parkhomenko.common.domain.Driver" discriminator-value="DRI">
+        <subclass name="com.parkhomenko.common.domain.Driver" discriminator-value="DRI" lazy="true">
             <join table="DRIVERS">
                 <key column="DRIVER_ID"/>
 

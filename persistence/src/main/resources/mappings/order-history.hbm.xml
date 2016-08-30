@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.OrderHistory" table="ORDER_HISTORY">
+        <meta attribute="class-description">
+            This class contains the order history detail.
+        </meta>
+        <id name="id" column="ORDER_HISTORY_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">order_history_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="note" column="NOTE" type="text" />
+
+        <!--created-->
+
+        <property name="status" column="STATUS">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.parkhomenko.common.domain.Order$Status</param>
+            </type>
+        </property>
+
+        <many-to-one name="user" column="USER_ID" class="com.parkhomenko.common.domain.User" not-null="true"/>
+        <many-to-one name="order" column="ORDER_ID" class="com.parkhomenko.common.domain.Order" not-null="true" />
+    </class>
+</hibernate-mapping>

@@ -38,9 +38,9 @@ public class ProductVersion extends Product {
         if (getInstructions() != null ? !getInstructions().equals(that.getInstructions()) : that.getInstructions() != null)
             return false;
         if (getCountry() != null ? !getCountry().equals(that.getCountry()) : that.getCountry() != null) return false;
-        if (getAllergicInfo() != null ? !getAllergicInfo().equals(that.getAllergicInfo()) : that.getAllergicInfo() != null)
+        if (getAllergic() != null ? !getAllergic().equals(that.getAllergic()) : that.getAllergic() != null)
             return false;
-        if (getAliasNames() != null ? !getAliasNames().equals(that.getAliasNames()) : that.getAliasNames() != null)
+        if (getAlias() != null ? !getAlias().equals(that.getAlias()) : that.getAlias() != null)
             return false;
         return getCore() != null ? getCore().equals(that.getCore()) : that.getCore() == null;
 
@@ -57,8 +57,8 @@ public class ProductVersion extends Product {
         result = 31 * result + (getManufacturer() != null ? getManufacturer().hashCode() : 0);
         result = 31 * result + (getInstructions() != null ? getInstructions().hashCode() : 0);
         result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getAllergicInfo() != null ? getAllergicInfo().hashCode() : 0);
-        result = 31 * result + (getAliasNames() != null ? getAliasNames().hashCode() : 0);
+        result = 31 * result + (getAllergic() != null ? getAllergic().hashCode() : 0);
+        result = 31 * result + (getAlias() != null ? getAlias().hashCode() : 0);
         result = 31 * result + (getCore() != null ? getCore().hashCode() : 0);
         return result;
     }

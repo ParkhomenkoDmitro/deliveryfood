@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.parkhomenko.common.domain.Order" table="ORDER" lazy="true">
+        <meta attribute="class-description">
+            This class contains the order detail.
+        </meta>
+        <id name="id" column="ORDER_ID" type="long">
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+                <param name="sequence_name">order_id_seq</param>
+            </generator>
+        </id>
+
+        <property name="code" column="CODE" type="string" update="false"/>
+
+        <!--created-->
+        <!--deliveryDate-->
+
+
+        <!--OneToMany orderProducts-->
+
+        <many-to-one name="warehouse" column="WAREHOUSE_ID" class="com.parkhomenko.common.domain.Warehouse" />
+        <many-to-one name="client" column="CLIENT_ID" class="com.parkhomenko.common.domain.Client" not-null="true" />
+
+        <component name="clientAddress" class="com.parkhomenko.common.domain.Address">
+            <many-to-one name="city" column="CITY_ID" class="com.parkhomenko.common.domain.City" not-null="true"/>
+
+            <component name="geolocation" class="com.parkhomenko.common.domain.Geolocation">
+                <property name="lat" column="LAT" type="double"/>
+                <property name="lng" column="LNG" type="double"/>
+            </component>
+
+            <property name="street" column="STREET" type="string" not-null="true"/>
+            <property name="house" column="HOUSE" type="string" not-null="true"/>
+            <property name="entrance" column="ENTRANCE" type="integer"/>
+            <property name="flat" column="FLAT" type="integer"/>
+        </component>
+
+        <property name="notes" column="NOTES" type="text" />
+
+        <property name="status" column="STATUS">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.parkhomenko.common.domain.Order$Status</param>
+            </type>
+        </property>
+
+        <property name="urgent" column="URGENT" type="boolean" />
+
+        <!--trafficCoast-->
+        <!--productsCoast-->
+        <!--totalCoast-->
+
+        <many-to-one name="driver" column="DRIVER_ID" class="com.parkhomenko.common.domain.Driver" />
+
+        <set name="history" inverse="true" lazy="true">
+            <key column="ORDER_ID" />
+            <one-to-many class="com.parkhomenko.common.domain.OrderHistory" />
+        </set>
+
+    </class>
+</hibernate-mapping>

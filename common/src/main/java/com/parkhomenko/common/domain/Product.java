@@ -1,11 +1,10 @@
 package com.parkhomenko.common.domain;
 
 import com.parkhomenko.common.domain.util.MonetaryAmount;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmytro Parkhomenko
@@ -13,6 +12,7 @@ import java.util.Set;
  */
 
 public class Product implements Serializable {
+    private final static String ALIAS_DELIM = ";";
     private Long id;
     private String code;
     private String barcode;
@@ -26,12 +26,11 @@ public class Product implements Serializable {
     private String manufacturer;
     private String instructions;
     private String country;
-    private String allergicInfo;
-    private String aliasNames;
+    private String allergic;
+    private Set<String> alias = new HashSet<>();
     private String image;
     private ProductParameter core;
     private ProductParameter shipping;
-    private Set<WarehouseProduct> warehouses = new HashSet<>();
 
     public Product() {
     }
@@ -48,14 +47,6 @@ public class Product implements Serializable {
         //TODO: common calc logic for all posible products according to
         result = price;
         return result;
-    }
-
-    public Set<WarehouseProduct> getWarehouses() {
-        return warehouses;
-    }
-
-    public void setWarehouses(Set<WarehouseProduct> warehouses) {
-        this.warehouses = warehouses;
     }
 
     public ProductParameter getShipping() {
@@ -162,20 +153,31 @@ public class Product implements Serializable {
         this.country = country;
     }
 
-    public String getAllergicInfo() {
-        return allergicInfo;
+    public String getAllergic() {
+        return allergic;
     }
 
-    public void setAllergicInfo(String allergicInfo) {
-        this.allergicInfo = allergicInfo;
+    public void setAllergic(String allergic) {
+        this.allergic = allergic;
     }
 
-    public String getAliasNames() {
-        return aliasNames;
+    public String getAlias() {
+        StringJoiner stringJoiner = new StringJoiner(ALIAS_DELIM);
+        stringJoiner.setEmptyValue(StringUtils.EMPTY);
+        alias.forEach(stringJoiner::add);
+        return stringJoiner.toString();
     }
 
-    public void setAliasNames(String aliasNames) {
-        this.aliasNames = aliasNames;
+    public void setAlias(String alias) {
+        if(StringUtils.isEmpty(alias)) {
+            return;
+        }
+        Set<String> result = new HashSet<>();
+        StringTokenizer t = new StringTokenizer(alias, ALIAS_DELIM);
+        while(t.hasMoreTokens()) {
+            result.add(t.nextToken());
+        }
+        this.alias = result;
     }
 
     public String getImage() {

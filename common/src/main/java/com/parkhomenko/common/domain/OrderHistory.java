@@ -1,6 +1,6 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.special_types.OrderStatus;
+import com.parkhomenko.common.domain.Order.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,7 +14,7 @@ public class OrderHistory implements Serializable {
     private Long id;
     private String note;
     private Date created;
-    private OrderStatus status;
+    private Status status;
     private User user;
     private Order order;
 
@@ -45,11 +45,11 @@ public class OrderHistory implements Serializable {
         this.created = created;
     }
 
-    public OrderStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

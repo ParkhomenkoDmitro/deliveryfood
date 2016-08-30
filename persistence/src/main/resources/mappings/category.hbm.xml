@@ -27,7 +27,7 @@
 
         <set name="products" table="CATEGORY_PRODUCT" lazy="true">
             <key column="CATEGORY_ID" not-null="true"/>
-            <many-to-many class="com.parkhomenko.common.domain.Product">
+            <many-to-many class="com.parkhomenko.common.domain.ProductOrigin">
                 <column name="PRODUCT_ID" not-null="true"/>
             </many-to-many>
         </set>

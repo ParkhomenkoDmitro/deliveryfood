@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.parkhomenko.common.domain.Warehouse" table="WAREHOUSE">
+    <class name="com.parkhomenko.common.domain.Warehouse" table="WAREHOUSE" lazy="true">
         <meta attribute="class-description">
             This class contains the warehouse detail.
         </meta>
@@ -34,5 +34,8 @@
                 <column name="USER_ID" not-null="true"/>
             </many-to-many>
         </set>
+
+        <!--products-->
+
     </class>
 </hibernate-mapping>
