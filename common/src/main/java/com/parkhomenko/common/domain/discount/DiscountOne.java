@@ -5,7 +5,6 @@ import com.parkhomenko.common.domain.special_types.DiscountType;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * Created on 12.08.16.
  */
 
-public class DiscountOne extends AbstractDiscount {
+public class DiscountOne extends Discount {
     private MonetaryAmount price;
     private Product product;
 

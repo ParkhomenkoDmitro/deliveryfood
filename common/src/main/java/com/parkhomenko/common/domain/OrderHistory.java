@@ -1,9 +1,9 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.Order.*;
+import com.parkhomenko.common.domain.Order.Status;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Dmytro Parkhomenko
@@ -13,7 +13,7 @@ import java.util.Date;
 public class OrderHistory implements Serializable {
     private Long id;
     private String note;
-    private Date created;
+    private LocalDateTime createdDateTime;
     private Status status;
     private User user;
     private Order order;
@@ -37,12 +37,12 @@ public class OrderHistory implements Serializable {
         this.note = note;
     }
 
-    public Date getCreated() {
-        return created;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
     public Status getStatus() {
@@ -76,7 +76,7 @@ public class OrderHistory implements Serializable {
 
         OrderHistory that = (OrderHistory) o;
 
-        if (created != null ? !created.equals(that.created) : that.created != null) return false;
+        if (createdDateTime != null ? !createdDateTime.equals(that.createdDateTime) : that.createdDateTime != null) return false;
         if (status != that.status) return false;
         return order != null ? order.equals(that.order) : that.order == null;
 
@@ -84,7 +84,7 @@ public class OrderHistory implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = created != null ? created.hashCode() : 0;
+        int result = createdDateTime != null ? createdDateTime.hashCode() : 0;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
         return result;

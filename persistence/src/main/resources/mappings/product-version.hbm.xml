@@ -20,8 +20,8 @@
         <property name="availableCount" column="AVAILABLE_COUNT" type="long"/>
 
         <!--price-->
-        <!--created-->
 
+        <property name="createdDateTime" column="CREATED_TIMESTAMP" type="timestamp" />
         <property name="description" column="DESCRIPTION" type="text" />
         <property name="brand" column="BRAND" type="string" />
         <property name="manufacturer" column="MANUFACTURER" type="string" />

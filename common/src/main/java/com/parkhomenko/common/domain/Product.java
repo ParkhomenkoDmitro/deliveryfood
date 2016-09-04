@@ -4,6 +4,7 @@ import com.parkhomenko.common.domain.util.MonetaryAmount;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ import java.util.*;
  * Created on 09.08.16.
  */
 
-public class Product implements Serializable {
+public abstract class Product implements Serializable {
     private final static String ALIAS_DELIM = ";";
     private Long id;
     private String code;
@@ -20,7 +21,7 @@ public class Product implements Serializable {
     private Long availableCount;
     private MonetaryAmount price;
     private Set<Category> categories = new HashSet<>();
-    private Date created;
+    private LocalDateTime createdDateTime;
     private String description;
     private String brand;
     private String manufacturer;
@@ -65,12 +66,16 @@ public class Product implements Serializable {
         this.availableCount = availableCount;
     }
 
-    public Date getCreated() {
-        return created;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
+        this.createdDateTime = createdDateTime;
+    }
+
+    public void setAlias(Set<String> alias) {
+        this.alias = alias;
     }
 
     public Long getId() {

@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.parkhomenko.common.domain.Order" table="ORDER" lazy="true">
+    <class name="com.parkhomenko.common.domain.Order" table="ORDERS" lazy="true">
         <meta attribute="class-description">
             This class contains the order detail.
         </meta>
@@ -15,10 +15,8 @@
         </id>
 
         <property name="code" column="CODE" type="string" update="false"/>
-
-        <!--created-->
-        <!--deliveryDate-->
-
+        <property name="createdDateTime" column="CREATED_TIMESTAMP" type="timestamp"/>
+        <property name="deliveryDateTime" column="DELIVERY_TIMESTAMP" type="timestamp"/>
 
         <!--OneToMany orderProducts-->
 

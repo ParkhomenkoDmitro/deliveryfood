@@ -1,6 +1,6 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.discount.AbstractDiscount;
+import com.parkhomenko.common.domain.discount.Discount;
 import com.parkhomenko.common.domain.discount.DiscountFetcher;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
@@ -8,7 +8,7 @@ import com.parkhomenko.common.domain.util.MonetaryAmount;
 import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +24,8 @@ public class Order implements Serializable {
 
     private Long id;
     private String code;
-    private Date created;
-    private Date deliveryDate;
+    private LocalDateTime createdDateTime;
+    private LocalDateTime deliveryDateTime;
     private Set<OrderProduct> orderProducts = new HashSet<>();
     private Warehouse warehouse;
     private Client client;
@@ -48,20 +48,20 @@ public class Order implements Serializable {
         totalCoast = productsCoast.add(trafficCoast);
     }
 
-    public Date getCreated() {
-        return created;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public LocalDateTime getDeliveryDateTime() {
+        return deliveryDateTime;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setDeliveryDateTime(LocalDateTime deliveryDateTime) {
+        this.deliveryDateTime = deliveryDateTime;
     }
 
     public Warehouse getWarehouse() {
@@ -193,8 +193,8 @@ public class Order implements Serializable {
     }
 
     private void calculateProductsPriceWithDiscounts(DiscountFetcher fetcher) {
-        AbstractDiscount discountOne = new DiscountOne();
-        AbstractDiscount discountTwo = new DiscountTwo();
+        Discount discountOne = new DiscountOne();
+        Discount discountTwo = new DiscountTwo();
         discountOne.setNextDiscount(discountTwo);
         discountOne.setFetcher(fetcher);
         discountTwo.setFetcher(fetcher);

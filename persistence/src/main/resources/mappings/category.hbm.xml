@@ -16,7 +16,7 @@
 
         <property name="name" column="NAME" type="string" />
         <property name="image" column="IMAGE" type="string" />
-        <property name="description" column="DESC" type="text" />
+        <property name="description" column="DESCRIPTION" type="text" />
 
         <many-to-one name="parentCategory" column="PARENT_ID" class="com.parkhomenko.common.domain.Category" />
 

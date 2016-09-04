@@ -4,33 +4,33 @@ import com.parkhomenko.common.domain.Client;
 import com.parkhomenko.common.domain.Order;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Dmytro Parkhomenko
  * Created on 11.08.16.
  */
 
-public abstract class AbstractDiscount implements Serializable {
+public abstract class Discount implements Serializable {
     private Long id;
     private String code;
     private String description;
-    private Date created;
-    private Date start;
-    private Date end;
+    private LocalDateTime createdDateTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
 
-    private AbstractDiscount nextDiscount;
+    private Discount nextDiscount;
 
     protected DiscountFetcher fetcher;
 
-    public AbstractDiscount() {
+    public Discount() {
     }
 
     public void setFetcher(DiscountFetcher fetcher) {
         this.fetcher = fetcher;
     }
 
-    public void setNextDiscount(AbstractDiscount nextDiscount) {
+    public void setNextDiscount(Discount nextDiscount) {
         this.nextDiscount = nextDiscount;
     }
 
@@ -67,28 +67,28 @@ public abstract class AbstractDiscount implements Serializable {
         this.description = description;
     }
 
-    public Date getCreated() {
-        return created;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedDateTime(LocalDateTime createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
-    public Date getStart() {
-        return start;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public Date getEnd() {
-        return end;
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     @Override
@@ -96,7 +96,7 @@ public abstract class AbstractDiscount implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractDiscount that = (AbstractDiscount) o;
+        Discount that = (Discount) o;
 
         return code != null ? code.equals(that.code) : that.code == null;
 

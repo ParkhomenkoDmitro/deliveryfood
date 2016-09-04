@@ -15,8 +15,7 @@
         </id>
 
         <property name="note" column="NOTE" type="text" />
-
-        <!--created-->
+        <property name="createdDateTime" column="CREATED_TIMESTAMP" type="timestamp" />
 
         <property name="status" column="STATUS">
             <type name="org.hibernate.type.EnumType">

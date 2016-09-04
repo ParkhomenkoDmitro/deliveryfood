@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
  * Created on 19.07.16.
  */
 
-public class User implements Serializable {
+public abstract class User implements Serializable {
     private Long id;
     private String firstname;
     private String lastname;

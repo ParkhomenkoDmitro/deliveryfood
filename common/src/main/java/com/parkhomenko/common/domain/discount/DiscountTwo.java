@@ -22,7 +22,7 @@ import static java.util.Comparator.*;
  * Created on 12.08.16.
  */
 
-public class DiscountTwo extends AbstractDiscount {
+public class DiscountTwo extends Discount {
     private Set<Product> products = new HashSet<>();
 
     public DiscountTwo() {
