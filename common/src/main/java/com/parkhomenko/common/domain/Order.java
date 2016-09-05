@@ -1,7 +1,7 @@
 package com.parkhomenko.common.domain;
 
 import com.parkhomenko.common.domain.discount.Discount;
-import com.parkhomenko.common.domain.discount.DiscountFetcher;
+import com.parkhomenko.common.domain.discount.DiscountSupplier;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
@@ -42,7 +42,7 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public void calculateCoast(DiscountFetcher fetcher) {
+    public void calculateCoast(DiscountSupplier fetcher) {
         productsCoast = calculateOrderProductsCoast(fetcher);
         trafficCoast = Traffic.calculateTrafficCoast(clientAddress, warehouse.getAddress());
         totalCoast = productsCoast.add(trafficCoast);
@@ -192,17 +192,17 @@ public class Order implements Serializable {
         return code != null ? code.hashCode() : 0;
     }
 
-    private void calculateProductsPriceWithDiscounts(DiscountFetcher fetcher) {
+    private void calculateProductsPriceWithDiscounts(DiscountSupplier fetcher) {
         Discount discountOne = new DiscountOne();
         Discount discountTwo = new DiscountTwo();
         discountOne.setNextDiscount(discountTwo);
         discountOne.setFetcher(fetcher);
         discountTwo.setFetcher(fetcher);
-        discountOne.calculateDiscount(null, this);
+        discountOne.calculateDiscount(this);
         getOrderProducts().forEach(OrderProduct::calculatePrice);
     }
 
-    private MonetaryAmount calculateOrderProductsCoast(DiscountFetcher fetcher) {
+    private MonetaryAmount calculateOrderProductsCoast(DiscountSupplier fetcher) {
         calculateProductsPriceWithDiscounts(fetcher);
         MonetaryAmount result = MonetaryAmountFactory.ZERO;
         orderProducts.forEach(orderProduct -> result.add(orderProduct.getPrice()));

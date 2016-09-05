@@ -1,10 +1,9 @@
 package com.parkhomenko.service.impl;
 
-import com.parkhomenko.common.domain.Product;
-import com.parkhomenko.common.domain.discount.DiscountFetcher;
 import com.parkhomenko.common.domain.discount.DiscountOne;
-import com.parkhomenko.common.domain.discount.DiscountTwo;
+import com.parkhomenko.persistence.dao.DiscountRepository;
 import com.parkhomenko.service.DiscountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,14 +12,12 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class DiscountServiceImpl implements DiscountFetcher, DiscountService {
-    @Override
-    public DiscountOne fetchDiscountTypeOne(Product product) {
-        return null;
-    }
+public class DiscountServiceImpl implements DiscountService {
 
-    @Override
-    public DiscountTwo fetchDiscountTypeTwo(Product product) {
-        return null;
+    private DiscountRepository<DiscountOne> oneDiscountRepository;
+
+    @Autowired
+    public void setOneDiscountRepository(DiscountRepository<DiscountOne> oneDiscountRepository) {
+        this.oneDiscountRepository = oneDiscountRepository;
     }
 }

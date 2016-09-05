@@ -1,6 +1,5 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.Client;
 import com.parkhomenko.common.domain.Order;
 import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.Product;
@@ -8,10 +7,11 @@ import com.parkhomenko.common.domain.special_types.DiscountType;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
 import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparing;
 
 /**
  * Class that represent DiscountTwo discount type logic and will be applied to all products in order that:
@@ -37,18 +37,19 @@ public class DiscountTwo extends Discount {
     }
 
     @Override
-    protected void calculate(Client client, Order order) {
-        Map<OrderProduct, DiscountTwo> map = findAppropriateOrderProducts(getNoAppliedDiscountsProducts(order.getOrderProducts()));
+    protected void calculate(Order order) {
+        Set<OrderProduct> noAppliedDiscountsProducts = getNoAppliedDiscountsProducts(order.getOrderProducts());
+        Map<OrderProduct, DiscountTwo> map = findAppropriateOrderProducts(noAppliedDiscountsProducts, order.getCreatedDateTime());
         Set<DiscountTwo> discountsTypeTwo = new HashSet<>(map.values());
         discountsTypeTwo.forEach(discount -> doLogic(filterByDiscount(discount, map)));
     }
 
-    private Map<OrderProduct, DiscountTwo> findAppropriateOrderProducts(Set<OrderProduct> products) {
+    private Map<OrderProduct, DiscountTwo> findAppropriateOrderProducts(Set<OrderProduct> products, LocalDateTime orderCreationDateTime) {
         Map<OrderProduct, DiscountTwo> discounts = new HashMap<>();
         for(OrderProduct orderProduct : products) {
-            DiscountTwo discount = fetcher.fetchDiscountTypeTwo(orderProduct.getProduct());
-            if(discount != null) {
-                discounts.put(orderProduct, discount);
+            Discount discount = fetcher.fetch(orderProduct.getProduct(), orderCreationDateTime);
+            if(discount.isValid(orderCreationDateTime)) {
+                discounts.put(orderProduct, (DiscountTwo) discount);
             }
         }
         return discounts;

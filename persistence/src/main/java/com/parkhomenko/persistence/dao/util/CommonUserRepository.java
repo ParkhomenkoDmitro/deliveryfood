@@ -22,16 +22,10 @@ import java.util.function.Supplier;
  *         Created on 18.08.16.
  */
 
-public class CommonUserRepository {
-
-    private SessionFactory sessionFactory;
+public abstract class CommonUserRepository extends CommonRepository {
 
     public CommonUserRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+        super(sessionFactory);
     }
 
     public <T> Page<T> findAll(Pageable pageable, Supplier<Criteria> supplier) {

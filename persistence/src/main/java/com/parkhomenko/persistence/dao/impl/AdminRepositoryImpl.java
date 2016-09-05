@@ -42,7 +42,7 @@ public class AdminRepositoryImpl extends CommonUserRepository implements AdminRe
     @Override
     public Admin save(Admin entity) {
         Long id = (Long) getCurrentSession().save(entity);
-        return (Admin) getCurrentSession().get(Admin.class, id);
+        return getCurrentSession().get(Admin.class, id);
     }
 
     @Override

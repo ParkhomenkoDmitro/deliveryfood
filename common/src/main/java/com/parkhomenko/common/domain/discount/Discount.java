@@ -1,6 +1,5 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.Client;
 import com.parkhomenko.common.domain.Order;
 
 import java.io.Serializable;
@@ -12,21 +11,40 @@ import java.time.LocalDateTime;
  */
 
 public abstract class Discount implements Serializable {
+    private static Discount emptyDiscount;
+
     private Long id;
     private String code;
     private String description;
     private LocalDateTime createdDateTime;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private Boolean isActive;
 
     private Discount nextDiscount;
 
-    protected DiscountFetcher fetcher;
+    protected DiscountSupplier fetcher;
 
     public Discount() {
     }
 
-    public void setFetcher(DiscountFetcher fetcher) {
+    public boolean isValid() {
+        return isValid(LocalDateTime.now());
+    }
+
+    public boolean isValid(LocalDateTime localDateTime) {
+        return isActive && localDateTime.isAfter(createdDateTime) && localDateTime.isBefore(endDateTime);
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public void setFetcher(DiscountSupplier fetcher) {
         this.fetcher = fetcher;
     }
 
@@ -34,14 +52,14 @@ public abstract class Discount implements Serializable {
         this.nextDiscount = nextDiscount;
     }
 
-    public void calculateDiscount(Client client, Order order) {
-        calculate(client, order);
+    public void calculateDiscount(Order order) {
+        calculate(order);
         if (nextDiscount != null) {
-            nextDiscount.calculateDiscount(client, order);
+            nextDiscount.calculateDiscount(order);
         }
     }
 
-    protected abstract void calculate(Client client, Order order);
+    protected abstract void calculate(Order order);
 
     public Long getId() {
         return id;
@@ -105,5 +123,25 @@ public abstract class Discount implements Serializable {
     @Override
     public int hashCode() {
         return code != null ? code.hashCode() : 0;
+    }
+
+    public static Discount getEmptyDiscount() {
+        if(emptyDiscount == null) {
+            emptyDiscount = initEmptyDiscount();
+        }
+        return emptyDiscount;
+    }
+
+    private static Discount initEmptyDiscount() {
+        Discount discount = new Discount() {
+            @Override
+            protected void calculate(Order order) {}
+        };
+        discount.setActive(false);
+        LocalDateTime localDateTime = LocalDateTime.MIN;
+        discount.setCreatedDateTime(localDateTime);
+        discount.setStartDateTime(localDateTime);
+        discount.setEndDateTime(localDateTime);
+        return discount;
     }
 }

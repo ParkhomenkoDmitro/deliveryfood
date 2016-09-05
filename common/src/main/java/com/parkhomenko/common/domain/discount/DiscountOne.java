@@ -4,6 +4,7 @@ import com.parkhomenko.common.domain.*;
 import com.parkhomenko.common.domain.special_types.DiscountType;
 import com.parkhomenko.common.domain.util.MonetaryAmount;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -42,8 +43,9 @@ public class DiscountOne extends Discount {
     }
 
     @Override
-    protected void calculate(Client client, Order order) {
-        Map<OrderProduct, DiscountOne> map = findAppropriateOrderProducts(getNoAppliedDiscountsProducts(order.getOrderProducts()));
+    protected void calculate(Order order) {
+        Set<OrderProduct> noAppliedDiscountsProducts = getNoAppliedDiscountsProducts(order.getOrderProducts());
+        Map<OrderProduct, DiscountOne> map = findAppropriateOrderProducts(noAppliedDiscountsProducts, order.getCreatedDateTime());
         map.keySet().forEach(orderProduct -> applyDiscount(orderProduct, map.get(orderProduct)));
     }
 
@@ -63,12 +65,12 @@ public class DiscountOne extends Discount {
         return orderProducts.stream().filter(orderProduct -> orderProduct.getAppliedDiscounts() == null).collect(Collectors.toSet());
     }
 
-    private Map<OrderProduct, DiscountOne> findAppropriateOrderProducts(Set<OrderProduct> products) {
+    private Map<OrderProduct, DiscountOne> findAppropriateOrderProducts(Set<OrderProduct> products, LocalDateTime orderCreationDateTime) {
         Map<OrderProduct, DiscountOne> discounts = new HashMap<>();
         for(OrderProduct orderProduct : products) {
-            DiscountOne discount = fetcher.fetchDiscountTypeOne(orderProduct.getProduct());
-            if(discount != null) {
-                discounts.put(orderProduct, discount);
+            Discount discount = fetcher.fetch(orderProduct.getProduct(), orderCreationDateTime);
+            if(discount.isValid(orderCreationDateTime)) {
+                discounts.put(orderProduct, (DiscountOne) discount);
             }
         }
         return discounts;
