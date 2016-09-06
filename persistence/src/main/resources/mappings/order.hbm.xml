@@ -47,9 +47,18 @@
 
         <property name="urgent" column="URGENT" type="boolean" />
 
-        <!--trafficCoast-->
-        <!--productsCoast-->
-        <!--totalCoast-->
+        <property name="trafficPrice" type="com.parkhomenko.persistence.config.DecimalMonetaryAmountCompositeUserType">
+            <column name="TRAFFIC_PRICE"/>
+            <column name="TRAFFIC_PRICE_CURRENCY"/>
+        </property>
+        <property name="productsPrice" type="com.parkhomenko.persistence.config.DecimalMonetaryAmountCompositeUserType">
+            <column name="PRODUCTS_PRICE"/>
+            <column name="PRODUCTS_PRICE_CURRENCY"/>
+        </property>
+        <property name="totalPrice" type="com.parkhomenko.persistence.config.DecimalMonetaryAmountCompositeUserType">
+            <column name="TOTAL_PRICE"/>
+            <column name="TOTAL_PRICE_CURRENCY"/>
+        </property>
 
         <many-to-one name="driver" column="DRIVER_ID" class="com.parkhomenko.common.domain.Driver" />
 

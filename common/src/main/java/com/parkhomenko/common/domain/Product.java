@@ -1,6 +1,6 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;

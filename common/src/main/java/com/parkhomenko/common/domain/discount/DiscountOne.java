@@ -2,7 +2,7 @@ package com.parkhomenko.common.domain.discount;
 
 import com.parkhomenko.common.domain.*;
 import com.parkhomenko.common.domain.special_types.DiscountType;
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

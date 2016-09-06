@@ -1,7 +1,7 @@
 package com.parkhomenko.common.domain;
 
 import com.parkhomenko.common.domain.discount.AppliedDiscount;
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.io.Serializable;
@@ -27,7 +27,7 @@ public class OrderProduct implements Serializable {
         if (appliedDiscounts == null) {
             price = product.calcPrice(count);
         } else {
-            price = MonetaryAmountFactory.create();
+            price = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
             appliedDiscounts.forEach(appliedDiscount -> price.add(appliedDiscount.getTotalPrice()));
         }
     }

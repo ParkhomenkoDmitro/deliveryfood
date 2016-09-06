@@ -4,7 +4,7 @@ import com.parkhomenko.common.domain.Order;
 import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.special_types.DiscountType;
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.time.LocalDateTime;
@@ -90,7 +90,8 @@ public class DiscountTwo extends Discount {
                 DiscountTwo discount = appropriates.get(orderProduct);
                 Product product = orderProduct.getProduct();
                 applyDiscount(discount, orderProduct, payProductQuantity, product.getPrice(), product.calcPrice(payProductQuantity));
-                applyDiscount(discount, orderProduct, freeProductQuantity, MonetaryAmountFactory.ZERO, MonetaryAmountFactory.ZERO);
+                MonetaryAmount zeroPrice = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+                applyDiscount(discount, orderProduct, freeProductQuantity, zeroPrice, zeroPrice);
             }
         }
     }

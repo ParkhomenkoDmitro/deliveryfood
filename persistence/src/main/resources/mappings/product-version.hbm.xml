@@ -19,7 +19,10 @@
         <property name="name" column="NAME" type="string"/>
         <property name="availableCount" column="AVAILABLE_COUNT" type="long"/>
 
-        <!--price-->
+        <property name="price" type="com.parkhomenko.persistence.config.DecimalMonetaryAmountCompositeUserType">
+            <column name="PRICE"/>
+            <column name="PRICE_CURRENCY"/>
+        </property>
 
         <property name="createdDateTime" column="CREATED_TIMESTAMP" type="timestamp" />
         <property name="description" column="DESCRIPTION" type="text" />

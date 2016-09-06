@@ -4,7 +4,7 @@ import com.parkhomenko.common.domain.discount.Discount;
 import com.parkhomenko.common.domain.discount.DiscountSupplier;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
 
 import java.io.Serializable;
@@ -33,19 +33,19 @@ public class Order implements Serializable {
     private String notes;
     private Status status;
     private boolean isUrgent;
-    private MonetaryAmount trafficCoast;
-    private MonetaryAmount productsCoast;
-    private MonetaryAmount totalCoast;
+    private MonetaryAmount trafficPrice;
+    private MonetaryAmount productsPrice;
+    private MonetaryAmount totalPrice;
     private Driver driver;
     private Set<OrderHistory> history = new HashSet<>();
 
     public Order() {
     }
 
-    public void calculateCoast(DiscountSupplier fetcher) {
-        productsCoast = calculateOrderProductsCoast(fetcher);
-        trafficCoast = Traffic.calculateTrafficCoast(clientAddress, warehouse.getAddress());
-        totalCoast = productsCoast.add(trafficCoast);
+    public void calculatePrice(DiscountSupplier fetcher) {
+        productsPrice = calculateOrderProductsPrice(fetcher);
+        trafficPrice = calculateTrafficPrice(clientAddress, warehouse.getAddress());
+        totalPrice = productsPrice.add(trafficPrice);
     }
 
     public LocalDateTime getCreatedDateTime() {
@@ -112,28 +112,28 @@ public class Order implements Serializable {
         isUrgent = urgent;
     }
 
-    public MonetaryAmount getTrafficCoast() {
-        return trafficCoast;
+    public MonetaryAmount getTrafficPrice() {
+        return trafficPrice;
     }
 
-    public void setTrafficCoast(MonetaryAmount trafficCoast) {
-        this.trafficCoast = trafficCoast;
+    public void setTrafficPrice(MonetaryAmount trafficPrice) {
+        this.trafficPrice = trafficPrice;
     }
 
-    public MonetaryAmount getProductsCoast() {
-        return productsCoast;
+    public MonetaryAmount getProductsPrice() {
+        return productsPrice;
     }
 
-    public void setProductsCoast(MonetaryAmount productsCoast) {
-        this.productsCoast = productsCoast;
+    public void setProductsPrice(MonetaryAmount productsPrice) {
+        this.productsPrice = productsPrice;
     }
 
-    public MonetaryAmount getTotalCoast() {
-        return totalCoast;
+    public MonetaryAmount getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotalCoast(MonetaryAmount totalCoast) {
-        this.totalCoast = totalCoast;
+    public void setTotalPrice(MonetaryAmount totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Driver getDriver() {
@@ -202,10 +202,15 @@ public class Order implements Serializable {
         getOrderProducts().forEach(OrderProduct::calculatePrice);
     }
 
-    private MonetaryAmount calculateOrderProductsCoast(DiscountSupplier fetcher) {
+    private MonetaryAmount calculateOrderProductsPrice(DiscountSupplier fetcher) {
         calculateProductsPriceWithDiscounts(fetcher);
-        MonetaryAmount result = MonetaryAmountFactory.ZERO;
+        MonetaryAmount result = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
         orderProducts.forEach(orderProduct -> result.add(orderProduct.getPrice()));
         return result;
+    }
+
+    private static MonetaryAmount calculateTrafficPrice(Address start, Address finish) {
+        //TODO traffic logic here
+        return MonetaryAmountFactory.getUSDZeroMonetaryAmount();
     }
 }

@@ -1,6 +1,6 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.util.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.MonetaryAmount;
 import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.special_types.DiscountType;
 
