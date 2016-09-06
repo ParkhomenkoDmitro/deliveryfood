@@ -4,13 +4,14 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.parkhomenko.common.domain.ProductVersion" table="PRODUCT_VERSION">
+    <class name="com.parkhomenko.common.domain.Product" abstract="true">
         <meta attribute="class-description">
-            This class contains the product version detail.
+            This class contains the product detail.
         </meta>
-        <id name="id" column="PRODUCT_VERSION_ID" type="long">
+
+        <id name="id" column="PRODUCT_ID" type="long">
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
-                <param name="sequence_name">product_version_id_seq</param>
+                <param name="sequence_name">product_id_seq</param>
             </generator>
         </id>
 
@@ -51,13 +52,26 @@
             </property>
         </component>
 
-        <set name="categories" table="CATEGORY_PRODUCTVERSION" lazy="true">
-            <key column="PRODUCT_ID"/>
-            <many-to-many class="com.parkhomenko.common.domain.Category">
-                <column name="CATEGORY_ID" not-null="true"/>
-            </many-to-many>
-        </set>
+        <union-subclass name="com.parkhomenko.common.domain.ProductOrigin" table="PRODUCT_ORIGIN" lazy="true">
+            <set name="categories" lazy="true" inverse="true">
+                <key column="PRODUCT_ID"/>
+                <many-to-many class="com.parkhomenko.common.domain.Category">
+                    <column name="CATEGORY_ID" not-null="true"/>
+                </many-to-many>
+            </set>
 
-        <many-to-one name="product" column="PRODUCT_ID" class="com.parkhomenko.common.domain.ProductOrigin" not-null="true" />
+            <!--warehouses-->
+        </union-subclass>
+
+        <union-subclass name="com.parkhomenko.common.domain.ProductVersion" table="PRODUCT_VERSION" lazy="true">
+            <set name="categories" table="CATEGORY_PRODUCTVERSION" lazy="true">
+                <key column="PRODUCT_ID"/>
+                <many-to-many class="com.parkhomenko.common.domain.Category">
+                    <column name="CATEGORY_ID" not-null="true"/>
+                </many-to-many>
+            </set>
+
+            <many-to-one name="product" column="PRODUCT_ORIGIN_ID" class="com.parkhomenko.common.domain.ProductOrigin" not-null="true" />
+        </union-subclass>
     </class>
 </hibernate-mapping>

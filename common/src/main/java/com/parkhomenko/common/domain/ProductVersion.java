@@ -6,16 +6,16 @@ package com.parkhomenko.common.domain;
  */
 
 public class ProductVersion extends Product {
-    private Product product;
+    private ProductOrigin product;
 
     public ProductVersion() {
     }
 
-    public Product getProduct() {
+    public ProductOrigin getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductOrigin product) {
         this.product = product;
     }
 
