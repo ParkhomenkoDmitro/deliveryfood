@@ -8,10 +8,8 @@
         <meta attribute="class-description">
             This class contains the city detail.
         </meta>
-        <id name="id" column="CITY_ID" type="long">
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
-                <param name="sequence_name">city_id_seq</param>
-            </generator>
+        <id name="id" column="CITY_ID" type="long" unsaved-value="0">
+            <generator class="identity" />
         </id>
 
         <property name="name" column="NAME" type="string"/>

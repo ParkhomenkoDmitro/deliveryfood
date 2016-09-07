@@ -8,10 +8,8 @@
         <meta attribute="class-description">
             This class contains the user detail.
         </meta>
-        <id name="id" column="USER_ID" type="long">
-            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
-                <param name="sequence_name">user_id_seq</param>
-            </generator>
+        <id name="id" column="USER_ID" type="long" unsaved-value="0">
+            <generator class="identity" />
         </id>
 
         <discriminator column="USER_DETAILS_TYPE" type="string"/>
