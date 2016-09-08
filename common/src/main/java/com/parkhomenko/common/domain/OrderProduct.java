@@ -28,7 +28,7 @@ public class OrderProduct implements Serializable {
             price = product.calcPrice(count);
         } else {
             price = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
-            appliedDiscounts.forEach(appliedDiscount -> price.add(appliedDiscount.getTotalPrice()));
+            appliedDiscounts.forEach(appliedDiscount -> price = price.add(appliedDiscount.getTotalPrice()));
         }
     }
 

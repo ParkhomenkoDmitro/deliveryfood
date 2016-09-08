@@ -204,9 +204,11 @@ public class Order implements Serializable {
 
     private MonetaryAmount calculateOrderProductsPrice(DiscountSupplier fetcher) {
         calculateProductsPriceWithDiscounts(fetcher);
-        MonetaryAmount result = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
-        orderProducts.forEach(orderProduct -> result.add(orderProduct.getPrice()));
-        return result;
+        MonetaryAmount price = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+        for(OrderProduct orderProduct : orderProducts) {
+            price = price.add(orderProduct.getPrice());
+        }
+        return price;
     }
 
     private static MonetaryAmount calculateTrafficPrice(Address start, Address finish) {

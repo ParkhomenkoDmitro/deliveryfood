@@ -62,7 +62,7 @@ public class DiscountOne extends Discount {
     }
 
     private Set<OrderProduct> getNoAppliedDiscountsProducts(Set<OrderProduct> orderProducts) {
-        return orderProducts.stream().filter(orderProduct -> orderProduct.getAppliedDiscounts() == null).collect(Collectors.toSet());
+        return orderProducts.stream().filter(orderProduct -> orderProduct.getAppliedDiscounts().isEmpty()).collect(Collectors.toSet());
     }
 
     private Map<OrderProduct, DiscountOne> findAppropriateOrderProducts(Set<OrderProduct> products, LocalDateTime orderCreationDateTime) {
