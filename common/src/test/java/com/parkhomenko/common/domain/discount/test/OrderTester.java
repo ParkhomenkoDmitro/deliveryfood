@@ -68,9 +68,10 @@ public class OrderTester {
 
         order.calculatePrice(discountSupplierMock);
 
-        MonetaryAmount actualPrice = order.getProductsPrice();
-        MonetaryAmount expectedPrice = MonetaryAmountFactory.getMonetaryAmount(BigDecimal.TEN.add(BigDecimal.ONE), CurrencyCode.USD);
-        Assert.assertEquals(actualPrice, expectedPrice);
+        MonetaryAmount actual = order.getProductsPrice();
+        MonetaryAmount expected = MonetaryAmountFactory.getMonetaryAmount(BigDecimal.TEN.add(BigDecimal.ONE), CurrencyCode.USD);
+
+        Assert.assertEquals(expected, actual);
     }
 
     private void mockDiscountOneBehaviour(Product product, MonetaryAmount discountOnePrice) {
