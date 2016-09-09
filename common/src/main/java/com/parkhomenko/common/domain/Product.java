@@ -1,11 +1,13 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.special_types.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static com.parkhomenko.common.domain.special_types.Measure.PS;
 
 /**
  * @author Dmytro Parkhomenko
@@ -38,8 +40,12 @@ public abstract class Product implements Serializable {
 
     public MonetaryAmount calcPrice(MonetaryAmount price, int count) {
         MonetaryAmount result;
-        //TODO: common calc logic for all posible products according to count, price, core, shipping
-        result = price;
+        if(shipping.getMeasure().equals(PS)) {
+            result = price.multiply(count);
+        } else {
+            //TODO: common calc logic for all posible products according to count, price, core, shipping
+            result = null;
+        }
         return result;
     }
 

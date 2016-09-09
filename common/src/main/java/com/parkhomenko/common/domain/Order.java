@@ -4,8 +4,8 @@ import com.parkhomenko.common.domain.discount.Discount;
 import com.parkhomenko.common.domain.discount.DiscountSupplier;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
-import com.parkhomenko.common.domain.special_types.MonetaryAmount;
-import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmountFactory;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

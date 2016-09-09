@@ -1,4 +1,4 @@
-package com.parkhomenko.common.domain.special_types;
+package com.parkhomenko.common.domain.special_types.money;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -38,6 +38,12 @@ public class DecimalMonetaryAmount implements MonetaryAmount, Serializable {
 
         //TODO: impl conversation
         return null;
+    }
+
+    @Override
+    public MonetaryAmount multiply(int count) {
+        BigDecimal newValue = value.multiply(BigDecimal.valueOf(count));
+        return new DecimalMonetaryAmount(newValue, currency);
     }
 
     @Override

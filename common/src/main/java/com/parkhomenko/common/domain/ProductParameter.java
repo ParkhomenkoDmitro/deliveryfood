@@ -14,6 +14,11 @@ public class ProductParameter {
     public ProductParameter() {
     }
 
+    public ProductParameter(Double value, Measure measure) {
+        this.value = value;
+        this.measure = measure;
+    }
+
     public Double getValue() {
         return value;
     }

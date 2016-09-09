@@ -1,7 +1,7 @@
 package com.parkhomenko.persistence.config;
 
-import com.parkhomenko.common.domain.special_types.DecimalMonetaryAmount;
-import com.parkhomenko.common.domain.special_types.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.DecimalMonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;

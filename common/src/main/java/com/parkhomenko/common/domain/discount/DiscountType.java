@@ -1,4 +1,4 @@
-package com.parkhomenko.common.domain.special_types;
+package com.parkhomenko.common.domain.discount;
 
 /**
  * @author Dmytro Parkhomenko

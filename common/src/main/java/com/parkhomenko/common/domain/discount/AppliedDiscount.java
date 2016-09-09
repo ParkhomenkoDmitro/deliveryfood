@@ -1,8 +1,7 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.special_types.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 import com.parkhomenko.common.domain.OrderProduct;
-import com.parkhomenko.common.domain.special_types.DiscountType;
 
 import java.io.Serializable;
 

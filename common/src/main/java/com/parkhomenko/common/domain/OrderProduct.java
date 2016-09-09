@@ -1,8 +1,8 @@
 package com.parkhomenko.common.domain;
 
 import com.parkhomenko.common.domain.discount.AppliedDiscount;
-import com.parkhomenko.common.domain.special_types.MonetaryAmount;
-import com.parkhomenko.common.domain.util.MonetaryAmountFactory;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
+import com.parkhomenko.common.domain.special_types.money.MonetaryAmountFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrderProduct implements Serializable {
     private Order order;
-    private Product product;
+    private ProductVersion product;
     private Integer count;
     private MonetaryAmount price;
     private List<AppliedDiscount> appliedDiscounts = new ArrayList<>();
@@ -48,11 +48,11 @@ public class OrderProduct implements Serializable {
         this.order = order;
     }
 
-    public Product getProduct() {
+    public ProductVersion getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductVersion product) {
         this.product = product;
     }
 

@@ -1,4 +1,4 @@
-package com.parkhomenko.common.domain.special_types;
+package com.parkhomenko.common.domain.special_types.money;
 
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -12,4 +12,5 @@ public interface MonetaryAmount extends Comparable<MonetaryAmount> {
     BigDecimal getValue();
     Currency getCurrency();
     MonetaryAmount add(MonetaryAmount monetaryAmount);
+    MonetaryAmount multiply(int count);
 }
