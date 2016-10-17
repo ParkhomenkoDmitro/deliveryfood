@@ -1,0 +1,2 @@
+INSERT INTO public.users (user_id, USER_DETAILS_TYPE, name, version) VALUES (1, 'ADM', 'Kris Evans', 1);
+INSERT INTO public.users (user_id, USER_DETAILS_TYPE, name, version) VALUES (2, 'ADM', 'Erik Bakhman', 1);

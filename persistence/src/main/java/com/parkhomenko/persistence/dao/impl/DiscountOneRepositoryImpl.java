@@ -1,19 +1,13 @@
 package com.parkhomenko.persistence.dao.impl;
 
-import com.parkhomenko.common.domain.Product;
-import com.parkhomenko.common.domain.discount.Discount;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.persistence.dao.DiscountRepository;
-import com.parkhomenko.persistence.dao.util.CommonRepository;
-import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
 
 /**
  * @author Dmytro Parkhomenko
@@ -21,31 +15,17 @@ import java.time.LocalDateTime;
  */
 
 @Repository
-public class DiscountOneRepositoryImpl extends CommonRepository implements DiscountRepository<DiscountOne> {
+public class DiscountOneRepositoryImpl implements DiscountRepository<DiscountOne> {
+
+    private SessionFactory sessionFactory;
 
     @Autowired
     public DiscountOneRepositoryImpl(SessionFactory sessionFactory) {
-        super(sessionFactory);
+        this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public Discount fetch(Product product) {
-        Criteria criteria = getCurrentSession().createCriteria(DiscountOne.class);
-        DiscountOne discountOne = null;
-        //TODO fetch DiscountOne instance from RDBMS and return it if found else return sigelton;
-        return Discount.getEmptyDiscount();
-    }
-
-    @Override
-    public Discount fetch(Product product, LocalDateTime orderCreationDateTime) {
-        DiscountOne discountOne = null;
-        //TODO fetch DiscountOne instance from RDBMS and return it if found else return sigelton;
-        return Discount.getEmptyDiscount();
-    }
-
-    @Override
-    public Iterable<DiscountOne> findAll(Sort sort) {
-        return null;
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
@@ -59,7 +39,7 @@ public class DiscountOneRepositoryImpl extends CommonRepository implements Disco
     }
 
     @Override
-    public Iterable<DiscountOne> save(Iterable entities) {
+    public Iterable<DiscountOne> save(Iterable<DiscountOne> entities) {
         return null;
     }
 
@@ -71,11 +51,6 @@ public class DiscountOneRepositoryImpl extends CommonRepository implements Disco
     @Override
     public boolean exists(Long aLong) {
         return false;
-    }
-
-    @Override
-    public Iterable<DiscountOne> findAll() {
-        return null;
     }
 
     @Override
@@ -94,12 +69,7 @@ public class DiscountOneRepositoryImpl extends CommonRepository implements Disco
     }
 
     @Override
-    public void delete(DiscountOne entity) {
-
-    }
-
-    @Override
-    public void delete(Iterable<? extends DiscountOne> entities) {
+    public void delete(Iterable<DiscountOne> entities) {
 
     }
 

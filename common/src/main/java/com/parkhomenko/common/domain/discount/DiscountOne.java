@@ -1,13 +1,10 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.*;
+import com.parkhomenko.common.domain.OrderProduct;
+import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Class that represent DiscountOne discount type logic and will be applied to all products in order that:
@@ -41,37 +38,27 @@ public class DiscountOne extends Discount {
         this.price = price;
     }
 
-    @Override
-    protected void calculate(Order order) {
-        Set<OrderProduct> noAppliedDiscountsProducts = getNoAppliedDiscountsProducts(order.getOrderProducts());
-        Map<OrderProduct, DiscountOne> map = findAppropriateOrderProducts(noAppliedDiscountsProducts, order.getCreatedDateTime());
-        map.keySet().forEach(orderProduct -> applyDiscount(orderProduct, map.get(orderProduct)));
+    public static void calculate(Set<OrderProduct> orderProducts) {
+        for (OrderProduct item : orderProducts) {
+            Discount discount = item.getProduct().getDiscount();
+            if(discount instanceof DiscountOne) {
+                applyDiscount(item);
+            }
+        }
     }
 
-    private void applyDiscount(OrderProduct orderProduct, DiscountOne discount) {
+    private static void applyDiscount(OrderProduct orderProduct) {
         AppliedDiscount appliedDiscount = new AppliedDiscount();
         Product product = orderProduct.getProduct();
         appliedDiscount.setCount(orderProduct.getCount());
+
+        DiscountOne discount = (DiscountOne) orderProduct.getProduct().getDiscount();
+
         appliedDiscount.setDiscountCode(discount.getCode());
         appliedDiscount.setType(DiscountType.TYPE_ONE);
         appliedDiscount.setPriceForOne(discount.getPrice());
         appliedDiscount.setTotalPrice(product.calcPrice(discount.getPrice(), orderProduct.getCount()));
         appliedDiscount.setOrderProduct(orderProduct);
         orderProduct.getAppliedDiscounts().add(appliedDiscount);
-    }
-
-    private Set<OrderProduct> getNoAppliedDiscountsProducts(Set<OrderProduct> orderProducts) {
-        return orderProducts.stream().filter(orderProduct -> orderProduct.getAppliedDiscounts().isEmpty()).collect(Collectors.toSet());
-    }
-
-    private Map<OrderProduct, DiscountOne> findAppropriateOrderProducts(Set<OrderProduct> products, LocalDateTime orderCreationDateTime) {
-        Map<OrderProduct, DiscountOne> discounts = new HashMap<>();
-        for(OrderProduct orderProduct : products) {
-            Discount discount = fetcher.fetch(orderProduct.getProduct(), orderCreationDateTime);
-            if(discount.isValid(orderCreationDateTime)) {
-                discounts.put(orderProduct, (DiscountOne) discount);
-            }
-        }
-        return discounts;
     }
 }

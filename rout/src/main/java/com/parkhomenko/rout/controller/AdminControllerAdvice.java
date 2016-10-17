@@ -1,6 +1,5 @@
 package com.parkhomenko.rout.controller;
 
-import com.parkhomenko.rout.util.NotFoundException;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 @ControllerAdvice(basePackageClasses = AdminController.class)
 public class AdminControllerAdvice {
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseBody
     ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
         DefaultErrorAttributes defaultErrorAttributes = new DefaultErrorAttributes();

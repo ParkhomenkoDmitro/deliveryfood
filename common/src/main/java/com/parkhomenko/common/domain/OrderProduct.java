@@ -24,10 +24,10 @@ public class OrderProduct implements Serializable {
     }
 
     public void calculatePrice() {
-        if (appliedDiscounts == null) {
+        if (appliedDiscounts.isEmpty()) {
             price = product.calcPrice(count);
         } else {
-            price = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+            price = MonetaryAmountFactory.ZERO;
             appliedDiscounts.forEach(appliedDiscount -> price = price.add(appliedDiscount.getTotalPrice()));
         }
     }

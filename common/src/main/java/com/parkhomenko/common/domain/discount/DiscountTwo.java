@@ -1,14 +1,11 @@
 package com.parkhomenko.common.domain.discount;
 
-import com.parkhomenko.common.domain.Order;
 import com.parkhomenko.common.domain.OrderProduct;
 import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 import com.parkhomenko.common.domain.special_types.money.MonetaryAmountFactory;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
@@ -35,44 +32,40 @@ public class DiscountTwo extends Discount {
         this.products = products;
     }
 
-    @Override
-    protected void calculate(Order order) {
-        Set<OrderProduct> noAppliedDiscountsProducts = getNoAppliedDiscountsProducts(order.getOrderProducts());
-        Map<OrderProduct, DiscountTwo> map = findAppropriateOrderProducts(noAppliedDiscountsProducts, order.getCreatedDateTime());
-        Set<DiscountTwo> discountsTypeTwo = new HashSet<>(map.values());
-        discountsTypeTwo.forEach(discount -> doLogic(filterByDiscount(discount, map)));
-    }
+    public static void calculate(Set<OrderProduct> orderProducts) {
+        Set<OrderProduct> orderProductsWithDiscountTwo = new HashSet<>();
+        Set<DiscountTwo> discounts = new HashSet<>();
 
-    private Map<OrderProduct, DiscountTwo> findAppropriateOrderProducts(Set<OrderProduct> products, LocalDateTime orderCreationDateTime) {
-        Map<OrderProduct, DiscountTwo> discounts = new HashMap<>();
-        for(OrderProduct orderProduct : products) {
-            Discount discount = fetcher.fetch(orderProduct.getProduct(), orderCreationDateTime);
-            if(discount.isValid(orderCreationDateTime)) {
-                discounts.put(orderProduct, (DiscountTwo) discount);
+        for (OrderProduct item : orderProducts) {
+            Discount discount = item.getProduct().getDiscount();
+            if(discount instanceof DiscountTwo) {
+                orderProductsWithDiscountTwo.add(item);
+                discounts.add((DiscountTwo) discount);
             }
         }
-        return discounts;
+
+        discounts.forEach(discount -> doLogic(filterByDiscount(discount, orderProductsWithDiscountTwo)));
     }
 
-    private Set<OrderProduct> getNoAppliedDiscountsProducts(Set<OrderProduct> orderProducts) {
-        return orderProducts.stream().filter(orderProduct -> orderProduct.getAppliedDiscounts() == null).collect(Collectors.toSet());
-    }
+    private static Set<OrderProduct> filterByDiscount(DiscountTwo discount, Set<OrderProduct> set) {
+        Set<OrderProduct> result = new HashSet<>();
 
-    private Map<OrderProduct, DiscountTwo> filterByDiscount(DiscountTwo discount, Map<OrderProduct, DiscountTwo> map) {
-        Map<OrderProduct, DiscountTwo> result = new HashMap<>();
-        for (OrderProduct orderProduct : map.keySet()) {
-            DiscountTwo currentDiscount = map.get(orderProduct);
+        for (OrderProduct item : set) {
+
+            DiscountTwo currentDiscount = (DiscountTwo) item.getProduct().getDiscount();
+
             if(discount.equals(currentDiscount)) {
-                result.put(orderProduct, currentDiscount);
+                result.add(item);
             }
         }
+
         return  result;
     }
 
-    private void doLogic(Map<OrderProduct, DiscountTwo> appropriates) {
+    private static void doLogic(Set<OrderProduct> appropriates) {
         final int EVERY_FREE_PRODUCT_INDEX = 3;
 
-        List<OrderProduct> orderProducts = new ArrayList<>(appropriates.keySet());
+        List<OrderProduct> orderProducts = new ArrayList<>(appropriates);
 
         orderProducts.sort(comparing(OrderProduct::getProduct, comparing(Product::getPrice)));
 
@@ -86,20 +79,21 @@ public class DiscountTwo extends Discount {
 
             if(freeProductQuantity > 0) {
                 int payProductQuantity = productQuantity - freeProductQuantity;
-                DiscountTwo discount = appropriates.get(orderProduct);
+                DiscountTwo discount = (DiscountTwo) orderProduct.getProduct().getDiscount();
                 Product product = orderProduct.getProduct();
                 applyDiscount(discount, orderProduct, payProductQuantity, product.getPrice(), product.calcPrice(payProductQuantity));
-                MonetaryAmount zeroPrice = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+                MonetaryAmount zeroPrice = MonetaryAmountFactory.ZERO;
                 applyDiscount(discount, orderProduct, freeProductQuantity, zeroPrice, zeroPrice);
             }
         }
     }
 
-    private void applyDiscount(DiscountTwo discount,
+    private static void applyDiscount(DiscountTwo discount,
                                OrderProduct orderProduct,
                                int count,
                                MonetaryAmount priceForOne,
                                MonetaryAmount totalPrice) {
+
         AppliedDiscount appliedDiscount = new AppliedDiscount();
         appliedDiscount.setCount(count);
         appliedDiscount.setDiscountCode(discount.getCode());

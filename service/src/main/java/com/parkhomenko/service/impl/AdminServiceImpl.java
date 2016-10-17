@@ -5,12 +5,12 @@ import com.parkhomenko.persistence.dao.AdminRepository;
 import com.parkhomenko.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Dmytro Parkhomenko
@@ -19,7 +19,6 @@ import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-
     private AdminRepository repository;
 
     @Autowired
@@ -28,65 +27,31 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @Transactional
-    public List<Admin> findAll(Sort sort) {
-        List<Admin> result = new ArrayList<>();
-        repository.findAll(sort).forEach(result::add);
-        return result;
-    }
-
-    @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Admin> findAll(Pageable pageable) {
         return repository.findAll(pageable).getContent();
     }
 
     @Override
     @Transactional
-    public Admin save(Admin entity) {
-        return repository.save(entity);
+    public Long save(Admin entity) {
+        Long id = entity.getId();
+
+        if(Objects.nonNull(id)) {
+            repository.update(entity);
+            return id;
+        }
+        return repository.create(entity);
     }
 
     @Override
-    @Transactional
-    public List<Admin> save(Iterable entities) {
-        List<Admin> result = new ArrayList<>();
-        Iterable<Admin> admins = repository.save(entities);
-        admins.forEach(admin -> result.add(admin));
-        return result;
-    }
-
-    @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Admin findOne(Long id) {
         return repository.findOne(id);
     }
 
     @Override
-    public boolean exists(Long id) {
-        return repository.exists(id);
-    }
-
-    @Override
-    @Transactional
-    public List<Admin> findAll() {
-        List<Admin> result = new ArrayList<>();
-        Iterable<Admin> admins = repository.findAll();
-        admins.forEach(admin -> result.add(admin));
-        return  result;
-    }
-
-    @Override
-    @Transactional
-    public List<Admin> findAll(Iterable<Long> longs) {
-        List<Admin> result = new ArrayList<>();
-        Iterable<Admin> admins = repository.findAll(longs);
-        admins.forEach(admin -> result.add(admin));
-        return result;
-    }
-
-    @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public long count() {
         return repository.count();
     }
@@ -99,14 +64,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public void delete(Admin entity) {
-        repository.delete(entity);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Iterable<Admin> entities) {
-        repository.delete(entities);
+    public void delete(Set<Long> ids) {
+        repository.delete(ids);
     }
 
     @Override

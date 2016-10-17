@@ -1,7 +1,5 @@
 package com.parkhomenko.common.domain;
 
-import com.parkhomenko.common.domain.discount.Discount;
-import com.parkhomenko.common.domain.discount.DiscountSupplier;
 import com.parkhomenko.common.domain.discount.DiscountOne;
 import com.parkhomenko.common.domain.discount.DiscountTwo;
 import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
@@ -40,12 +38,6 @@ public class Order implements Serializable {
     private Set<OrderHistory> history = new HashSet<>();
 
     public Order() {
-    }
-
-    public void calculatePrice(DiscountSupplier fetcher) {
-        productsPrice = calculateOrderProductsPrice(fetcher);
-        trafficPrice = calculateTrafficPrice(clientAddress, warehouse.getAddress());
-        totalPrice = productsPrice.add(trafficPrice);
     }
 
     public LocalDateTime getCreatedDateTime() {
@@ -192,27 +184,27 @@ public class Order implements Serializable {
         return code != null ? code.hashCode() : 0;
     }
 
-    private void calculateProductsPriceWithDiscounts(DiscountSupplier fetcher) {
-        Discount discountOne = new DiscountOne();
-        Discount discountTwo = new DiscountTwo();
-        discountOne.setNextDiscount(discountTwo);
-        discountOne.setFetcher(fetcher);
-        discountTwo.setFetcher(fetcher);
-        discountOne.calculateDiscount(this);
-        getOrderProducts().forEach(OrderProduct::calculatePrice);
+    public void calculatePrice() {
+        productsPrice = calculateTotalProductsPrice();
+        trafficPrice = calculateTrafficPrice(clientAddress, warehouse.getAddress());
+        totalPrice = productsPrice.add(trafficPrice);
     }
 
-    private MonetaryAmount calculateOrderProductsPrice(DiscountSupplier fetcher) {
-        calculateProductsPriceWithDiscounts(fetcher);
-        MonetaryAmount price = MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+    private MonetaryAmount calculateTotalProductsPrice() {
+        DiscountOne.calculate(orderProducts);
+        DiscountTwo.calculate(orderProducts);
+        orderProducts.forEach(OrderProduct::calculatePrice);
+
+        MonetaryAmount price = MonetaryAmountFactory.ZERO;
+
         for(OrderProduct orderProduct : orderProducts) {
             price = price.add(orderProduct.getPrice());
         }
+
         return price;
     }
 
     private static MonetaryAmount calculateTrafficPrice(Address start, Address finish) {
-        //TODO traffic logic here
-        return MonetaryAmountFactory.getUSDZeroMonetaryAmount();
+        return MonetaryAmountFactory.ZERO; //TODO traffic logic here
     }
 }

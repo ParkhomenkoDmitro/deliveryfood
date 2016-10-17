@@ -1,19 +1,23 @@
 package com.parkhomenko.persistence.dao;
 
-import com.parkhomenko.common.domain.Product;
 import com.parkhomenko.common.domain.discount.Discount;
-import com.parkhomenko.common.domain.discount.DiscountSupplier;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-import java.time.LocalDateTime;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author Dmytro Parkhomenko
  *         Created on 05.09.16.
  */
 
-@NoRepositoryBean
-public interface DiscountRepository <T extends Discount> extends PagingAndSortingRepository<T, Long>, DiscountSupplier {
-    Discount fetch(Product product);
+public interface DiscountRepository <T extends Discount> {
+    Page<T> findAll(Pageable pageable);
+    T save(T entity);
+    Iterable<T> save(Iterable<T> entities);
+    T findOne(Long aLong);
+    boolean exists(Long aLong);
+    Iterable<T> findAll(Iterable<Long> longs);
+    long count();
+    void delete(Long aLong);
+    void delete(Iterable<T> entities);
+    void deleteAll();
 }

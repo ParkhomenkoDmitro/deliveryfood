@@ -1,11 +1,15 @@
 package com.parkhomenko.common.domain;
 
+import com.parkhomenko.common.domain.discount.Discount;
 import com.parkhomenko.common.domain.special_types.money.MonetaryAmount;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringJoiner;
+import java.util.StringTokenizer;
 
 import static com.parkhomenko.common.domain.special_types.Measure.PS;
 
@@ -34,6 +38,7 @@ public abstract class Product implements Serializable {
     private String image;
     private ProductParameter core;
     private ProductParameter shipping;
+    private Discount discount;//TODO add hbm
 
     public Product() {
     }
@@ -51,9 +56,21 @@ public abstract class Product implements Serializable {
 
     public MonetaryAmount calcPrice(int count) {
         MonetaryAmount result;
-        //TODO: common calc logic for all posible products according to
-        result = price;
+        if(shipping.getMeasure().equals(PS)) {
+            result = price.multiply(count);
+        } else {
+            //TODO: common calc logic for all posible products according to count, price, core, shipping
+            result = null;
+        }
         return result;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     public ProductParameter getShipping() {

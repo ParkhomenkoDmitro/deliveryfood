@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 public abstract class User implements Serializable {
     private Long id;
+    private int version;
     private String firstname;
     private String lastname;
     private String email;
@@ -39,6 +40,14 @@ public abstract class User implements Serializable {
         StringTokenizer t = new StringTokenizer(name);
         firstname = t.nextToken();
         lastname = t.nextToken();
+    }
+
+    int getVersion() {
+        return version;
+    }
+
+    void setVersion(int version) {
+        this.version = version;
     }
 
     public String getEmail() {
@@ -109,6 +118,7 @@ public abstract class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", version=" + version +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +

@@ -1,9 +1,8 @@
 package com.parkhomenko.service;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmytro Parkhomenko
@@ -11,17 +10,11 @@ import java.util.List;
  */
 
 public interface CommonUserService<T> {
-    List<T> findAll(Sort sort);
-    List<T> findAll(Pageable pageable);
-    T save(T entity);
-    List<T> save(Iterable entities);
+    Iterable<T> findAll(Pageable pageable);
+    Long save(T entity);
     T findOne(Long id);
-    boolean exists(Long id);
-    List<T> findAll();
-    List<T> findAll(Iterable<Long> longs);
     long count();
     void delete(Long id);
-    void delete(T entity);
-    void delete(Iterable<T> entities);
+    void delete(Set<Long> ids);
     void deleteAll();
 }

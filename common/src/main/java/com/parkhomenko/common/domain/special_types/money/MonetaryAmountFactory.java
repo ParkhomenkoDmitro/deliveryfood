@@ -9,11 +9,14 @@ import java.util.Currency;
  */
 
 public class MonetaryAmountFactory {
-    public static MonetaryAmount getUSDZeroMonetaryAmount() {
-        return new DecimalMonetaryAmount(BigDecimal.ZERO, Currency.getInstance(CurrencyCode.USD));
+    public static MonetaryAmount ZERO = new DecimalMonetaryAmount(BigDecimal.ZERO, Currency.getInstance(CurrencyCode.USD));
+
+    public static MonetaryAmount money(double price) {
+        BigDecimal bigDecimal = new BigDecimal(price);
+        return new DecimalMonetaryAmount(bigDecimal, Currency.getInstance(CurrencyCode.USD));
     }
 
-    public static MonetaryAmount getMonetaryAmount(BigDecimal price, String currencyCode) {
+    public static MonetaryAmount money(BigDecimal price, String currencyCode) {
         return new DecimalMonetaryAmount(price, Currency.getInstance(currencyCode));
     }
 }

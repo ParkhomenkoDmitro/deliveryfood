@@ -2,6 +2,7 @@ package com.parkhomenko.common.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -21,5 +22,17 @@ public class Admin extends User implements Serializable {
 
     public void setWarehouses(Set<Warehouse> warehouses) {
         this.warehouses = warehouses;
+    }
+
+    public void update(Admin updatedAdmin) {
+        if(Objects.nonNull(updatedAdmin.getName())) {
+            setName(updatedAdmin.getName());
+        }
+
+        if(Objects.nonNull(updatedAdmin.getLogin())) {
+            setLogin(updatedAdmin.getLogin());
+        }
+
+        //TODO: add here others fields
     }
 }

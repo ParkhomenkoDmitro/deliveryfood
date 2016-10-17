@@ -3,6 +3,7 @@ package com.parkhomenko.persistence.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -29,6 +30,10 @@ public class HibernateConfig implements TransactionManagementConfigurer {
     @Autowired
     private Environment env;
 
+    @Autowired
+    @Qualifier("hibernate-properties")
+    private Properties hibernateProperties;
+
     @Bean
     public DataSource configureDataSource() {
         HikariConfig config = new HikariConfig();
@@ -51,8 +56,9 @@ public class HibernateConfig implements TransactionManagementConfigurer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(configureDataSource());
-        sessionFactory.setMappingDirectoryLocations(new ClassPathResource("mappings"));
-        sessionFactory.setHibernateProperties(hibernateProperties());
+        sessionFactory.setMappingDirectoryLocations(
+                new ClassPathResource(hibernateProperties.getProperty("hibernate.mapping_directory_locations")));
+        sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }
 
@@ -61,10 +67,4 @@ public class HibernateConfig implements TransactionManagementConfigurer {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.setProperty(org.hibernate.cfg.Environment.HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.setProperty(org.hibernate.cfg.Environment.DIALECT, env.getProperty("hibernate.dialect"));
-        return properties;
-    }
 }
