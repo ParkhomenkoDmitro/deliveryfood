@@ -1,5 +1,8 @@
 package com.parkhomenko.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.parkhomenko.common.domain.util.View;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +13,7 @@ import java.util.Set;
  */
 
 public class Warehouse implements Serializable {
+
     private Long id;
     private Address address;
     private Set<Admin> admins = new HashSet<>();
@@ -18,10 +22,16 @@ public class Warehouse implements Serializable {
     public Warehouse() {
     }
 
+    @JsonView(View.WarehouseDetails.class)
+    public Set<Admin> getAdmins() {
+        return admins;
+    }
+
     public void setAdmins(Set<Admin> admins) {
         this.admins = admins;
     }
 
+    @JsonView(View.WarehouseDetails.class)
     public Set<WarehouseProduct> getProducts() {
         return products;
     }
@@ -30,6 +40,7 @@ public class Warehouse implements Serializable {
         this.products = products;
     }
 
+    @JsonView(View.Summary.class)
     public Long getId() {
         return id;
     }
@@ -38,16 +49,13 @@ public class Warehouse implements Serializable {
         this.id = id;
     }
 
+    @JsonView(View.Summary.class)
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Set<Admin> getAdmins() {
-        return admins;
     }
 
     @Override

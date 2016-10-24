@@ -1,1 +1,3 @@
-TRUNCATE TABLE public.users CASCADE;
+TRUNCATE public.users CASCADE;
+
+TRUNCATE public.ROLE CASCADE;

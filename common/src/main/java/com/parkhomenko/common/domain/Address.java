@@ -1,5 +1,8 @@
 package com.parkhomenko.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.parkhomenko.common.domain.util.View;
+
 import java.io.Serializable;
 
 /**
@@ -18,6 +21,7 @@ public class Address implements Serializable {
     public Address() {
     }
 
+    @JsonView(View.Summary.class)
     public City getCity() {
         return city;
     }
@@ -26,6 +30,7 @@ public class Address implements Serializable {
         this.city = city;
     }
 
+    @JsonView(View.AddressDetails.class)
     public Geolocation getGeolocation() {
         return geolocation;
     }
@@ -34,6 +39,7 @@ public class Address implements Serializable {
         this.geolocation = geolocation;
     }
 
+    @JsonView(View.Summary.class)
     public String getStreet() {
         return street;
     }
@@ -42,6 +48,7 @@ public class Address implements Serializable {
         this.street = street;
     }
 
+    @JsonView(View.Summary.class)
     public String getHouse() {
         return house;
     }
@@ -50,6 +57,7 @@ public class Address implements Serializable {
         this.house = house;
     }
 
+    @JsonView(View.Summary.class)
     public Integer getEntrance() {
         return entrance;
     }
@@ -58,6 +66,7 @@ public class Address implements Serializable {
         this.entrance = entrance;
     }
 
+    @JsonView(View.Summary.class)
     public Integer getFlat() {
         return flat;
     }

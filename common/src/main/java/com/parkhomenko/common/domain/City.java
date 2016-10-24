@@ -1,5 +1,8 @@
 package com.parkhomenko.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.parkhomenko.common.domain.util.View;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -9,6 +12,7 @@ import java.util.Set;
  */
 
 public class City implements Serializable {
+
     private Long id;
     private String name;
     private Geolocation geolocation;
@@ -17,6 +21,7 @@ public class City implements Serializable {
     public City() {
     }
 
+    @JsonView(View.Summary.class)
     public Long getId() {
         return id;
     }
@@ -25,6 +30,7 @@ public class City implements Serializable {
         this.id = id;
     }
 
+    @JsonView(View.Summary.class)
     public String getName() {
         return name;
     }
@@ -33,6 +39,7 @@ public class City implements Serializable {
         this.name = name;
     }
 
+    @JsonView(View.CityDetails.class)
     public Geolocation getGeolocation() {
         return geolocation;
     }
@@ -41,6 +48,7 @@ public class City implements Serializable {
         this.geolocation = geolocation;
     }
 
+    @JsonView(View.CityDetails.class)
     public Set<Warehouse> getWarehouses() {
         return warehouses;
     }

@@ -1,5 +1,8 @@
 package com.parkhomenko.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.parkhomenko.common.domain.util.View;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +11,14 @@ import java.io.Serializable;
  */
 
 public class Role implements Serializable {
+
     private Long id;
     private String name;
 
     public Role() {
     }
 
+    @JsonView(View.Summary.class)
     public Long getId() {
         return id;
     }
@@ -22,6 +27,7 @@ public class Role implements Serializable {
         this.id = id;
     }
 
+    @JsonView(View.Summary.class)
     public String getName() {
         return name;
     }

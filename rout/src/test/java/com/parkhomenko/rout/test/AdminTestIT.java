@@ -24,7 +24,10 @@ import static junit.framework.TestCase.assertTrue;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {"hibernate.search.index=false"}
+)
 @ActiveProfiles("development")
 public class AdminTestIT {
 

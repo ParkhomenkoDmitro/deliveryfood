@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.parkhomenko.common.domain.Role" table="ROLE">
+    <class name="com.parkhomenko.common.domain.Role" table="ROLE" lazy="true">
         <meta attribute="class-description">
             This class contains the role detail.
         </meta>

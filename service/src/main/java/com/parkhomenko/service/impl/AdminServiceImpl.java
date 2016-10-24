@@ -73,4 +73,10 @@ public class AdminServiceImpl implements AdminService {
     public void deleteAll() {
         repository.deleteAll();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Admin> search(Admin admin) {
+        return repository.search(admin);
+    }
 }

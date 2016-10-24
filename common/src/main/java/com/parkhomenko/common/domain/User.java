@@ -1,6 +1,14 @@
 package com.parkhomenko.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.parkhomenko.common.domain.util.View;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+
 import java.io.Serializable;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -10,6 +18,7 @@ import java.util.StringTokenizer;
  */
 
 public abstract class User implements Serializable {
+
     private Long id;
     private int version;
     private String firstname;
@@ -24,6 +33,8 @@ public abstract class User implements Serializable {
     public User() {
     }
 
+    @JsonView(View.Summary.class)
+    @DocumentId
     public Long getId() {
         return id;
     }
@@ -32,14 +43,29 @@ public abstract class User implements Serializable {
         this.id = id;
     }
 
+    @JsonView(View.Summary.class)
+    @Field
+    @Analyzer(definition = "name_login_analyzer")
     public String getName() {
-        return firstname + ' ' + lastname;
+        String result = firstname;
+
+        if(Objects.nonNull(lastname)) {
+            result += ' ' + lastname;
+        }
+
+        return result;
     }
 
     public void setName(String name) {
         StringTokenizer t = new StringTokenizer(name);
+
         firstname = t.nextToken();
-        lastname = t.nextToken();
+
+        try {
+            lastname = t.nextToken();
+        } catch (NoSuchElementException exp) {
+            lastname = null;
+        }
     }
 
     int getVersion() {
@@ -50,6 +76,9 @@ public abstract class User implements Serializable {
         this.version = version;
     }
 
+    @JsonView(View.Summary.class)
+    @Field
+    @Analyzer(definition = "email_analyzer")
     public String getEmail() {
         return email;
     }
@@ -58,6 +87,9 @@ public abstract class User implements Serializable {
         this.email = email;
     }
 
+    @JsonView(View.Summary.class)
+    @Field
+    @Analyzer(definition = "phone_analyzer")
     public String getPhone() {
         return phone;
     }
@@ -66,6 +98,9 @@ public abstract class User implements Serializable {
         this.phone = phone;
     }
 
+    @JsonView(View.Summary.class)
+    @Field
+    @Analyzer(definition = "name_login_analyzer")
     public String getLogin() {
         return login;
     }
@@ -82,6 +117,7 @@ public abstract class User implements Serializable {
         this.password = password;
     }
 
+    @JsonView(View.UserDetails.class)
     public Set<Role> getRoles() {
         return roles;
     }
@@ -90,6 +126,7 @@ public abstract class User implements Serializable {
         this.roles = roles;
     }
 
+    @JsonView(View.Summary.class)
     public Boolean getBlocked() {
         return blocked;
     }

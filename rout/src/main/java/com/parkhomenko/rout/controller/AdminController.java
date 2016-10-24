@@ -1,6 +1,8 @@
 package com.parkhomenko.rout.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.parkhomenko.common.domain.Admin;
+import com.parkhomenko.common.domain.util.View;
 import com.parkhomenko.persistence.dao.util.LoggingMessage;
 import com.parkhomenko.rout.util.CacheUtil;
 import com.parkhomenko.service.AdminService;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,6 +31,7 @@ public class AdminController {
         this.service = service;
     }
 
+    @JsonView(View.UserDetails.class)
     @RequestMapping(value = "/admins/{id}", method = RequestMethod.GET)
     public Admin getById(@PathVariable Long id) {
         return service.findOne(id);
@@ -79,6 +83,8 @@ public class AdminController {
      * @param pageable must contains Sort object
      * @return collection of admins
      */
+
+    @JsonView(View.Summary.class)
     @RequestMapping(value = "/admins", method = RequestMethod.GET)
     public Iterable<Admin> findAll(Pageable pageable) {
         return service.findAll(pageable);
@@ -92,5 +98,11 @@ public class AdminController {
     @RequestMapping(value = "/admins/set", method = RequestMethod.DELETE)
     public void deleteByIds(@RequestBody Set<Long> ids) {
         service.delete(ids);
+    }
+
+    @JsonView(View.Summary.class)
+    @RequestMapping(value = "/admins/search", method = RequestMethod.POST)
+    public List<Admin> search(@RequestBody Admin admin) {
+        return service.search(admin);
     }
 }
