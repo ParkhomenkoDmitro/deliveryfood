@@ -14,7 +14,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -191,6 +193,51 @@ public class AdminTestIT {
 
         assertTrue("Not correct cont", count == 0);
         assertTrue("Status is not OK", responseEntity2.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void search_test_for_find () {
+        Admin adminOne = new Admin();
+        adminOne.setName("Kris Evans");
+
+        restTemplate.postForEntity("/admins", adminOne, Long.class);
+
+        Admin adminTwo = new Admin();
+        adminTwo.setName("Erik Bakhman");
+
+        restTemplate.postForEntity("/admins", adminTwo, Long.class);
+
+        Admin admin = new Admin();
+        admin.setName("Erik");
+
+        ResponseEntity<Admin[]> responseEntity = restTemplate.postForEntity("/admins/search", admin, Admin[].class);
+        Admin[] searchResult = responseEntity.getBody();
+
+        assertTrue("Not correct cont", searchResult.length == 1);
+        assertTrue("Search mismatch", searchResult[0].getName().contains(admin.getName()));
+        assertTrue("Status is not OK", responseEntity.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void search_test_for_not_find () {
+        Admin adminOne = new Admin();
+        adminOne.setName("Kris Evans");
+
+        restTemplate.postForEntity("/admins", adminOne, Long.class);
+
+        Admin adminTwo = new Admin();
+        adminTwo.setName("Erik Bakhman");
+
+        restTemplate.postForEntity("/admins", adminTwo, Long.class);
+
+        Admin admin = new Admin();
+        admin.setName("Parkhomenko");
+
+        ResponseEntity<Admin[]> responseEntity = restTemplate.postForEntity("/admins/search", admin, Admin[].class);
+        Admin[] searchResult = responseEntity.getBody();
+
+        assertTrue("Not correct cont", searchResult.length == 0);
+        assertTrue("Status is not OK", responseEntity.getStatusCode().is2xxSuccessful());
     }
 
     private Admin buildAdmin() {
